@@ -1,0 +1,135 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/admin"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Manage Events</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="navigateToAddEvent()">
+                <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <!-- Search and Filter Section -->
+    <div class="search-section">
+        <div class="search-container">
+            <div class="search-icon">
+                <ion-icon name="search-outline"></ion-icon>
+            </div>
+            <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="filterEvents()" placeholder="Search events...">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab" [class.active]="typeFilter === 'all'" (click)="setFilter('all')">
+                All
+            </button>
+            <button class="filter-tab" [class.active]="typeFilter === 'funeral'" (click)="setFilter('funeral')">
+                Funeral
+            </button>
+            <button class="filter-tab" [class.active]="typeFilter === 'wedding'" (click)="setFilter('wedding')">
+                Wedding
+            </button>
+            <button class="filter-tab" [class.active]="typeFilter === 'child_dedication'" (click)="setFilter('child_dedication')">
+                Child Dedication
+            </button>
+        </div>
+    </div>
+
+    <!-- Events List -->
+    <div class="events-list">
+        <div class="list-header">
+            <span>Events ({{filteredEvents.length}})</span>
+        </div>
+
+        <div class="events-container">
+            <div *ngFor="let evnt of filteredEvents" class="event-card">
+                <div class="event-icon" [class]="getEventTypeClass(evnt.event_type)">
+                    <ion-icon [name]="getEventTypeIcon(evnt.event_type)"></ion-icon>
+                </div>
+
+                <div class="event-info">
+                    <h3 class="event-member">{{ evnt.member_name }}</h3>
+                    <p class="event-type">{{ evnt.event_type_display }}</p>
+                    <p class="event-meta">
+                        {{ evnt.event_date | date:'MMM d, y' }}
+                        <span *ngIf="evnt.venue"> • {{ evnt.venue }}</span>
+                    </p>
+                    <p class="event-levy" *ngIf="evnt.levy_amount > 0">
+                        Transport Levy: {{ formatCurrency(evnt.levy_amount) }}
+                        <!-- <span class="levy-status" [class.paid]="evnt.is_levy_paid" [class.unpaid]="!evnt.is_levy_paid">
+                            {{ evnt.is_levy_paid ? 'Paid' : 'Unpaid' }}
+                        </span> -->
+                    </p>
+                    <p class="event-description" *ngIf="evnt.description">
+                        {{ evnt.description }}
+                    </p>
+                </div>
+
+                <div class="event-actions">
+                    <button class="action-btn edit-btn" (click)="editEvent(evnt); $event.stopPropagation()">
+                        <ion-icon name="create-outline"></ion-icon>
+                    </button>
+                    <button class="action-btn delete-btn" (click)="confirmDelete(evnt)">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="filteredEvents.length === 0 && !loading" class="empty-state">
+            <div class="empty-icon">
+                <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+            <h3>No events found</h3>
+            <p>Add your first event to get started</p>
+            <button class="primary-btn" (click)="navigateToAddEvent()">Add Event</button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading events...</p>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div *ngIf="showDeleteConfirm" class="confirmation-overlay">
+            <div class="confirmation-modal">
+                <div class="modal-header">
+                    <h3>Confirm Deletion</h3>
+                </div>
+                <div class="modal-content">
+                    <p>Are you sure you want to delete this event?</p>
+                    <div class="event-details">
+                        <strong>{{ eventToDelete?.member_name }}</strong>
+                        <br> {{ eventToDelete?.event_type_display }}
+                        <br> {{ eventToDelete?.event_date | date:'fullDate' }}
+                        <br>
+                        <span *ngIf="eventToDelete?.venue">Venue: {{ eventToDelete?.venue }}<br></span>
+                        <span *ngIf="(eventToDelete?.levy_amount || 0) > 0">
+                            Transport Levy: {{ formatCurrency(eventToDelete?.levy_amount) }}
+                            ({{ eventToDelete?.is_levy_paid ? 'Paid' : 'Unpaid' }})
+                            <br>
+                        </span>
+                    </div>
+                    <p class="warning-text">This action cannot be undone!</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="secondary-btn" (click)="cancelDelete()">Cancel</button>
+                    <button class="action-btn edit-btn" (click)="editEvent(eventToDelete); $event.stopPropagation()">
+                        <ion-icon name="create-outline"></ion-icon>
+                    </button>
+                    <button class="danger-btn" (click)="deleteEvent()">Delete Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

@@ -1,0 +1,99 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/admin"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Manage Members</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="openImportModal()">
+                <ion-icon slot="icon-only" name="cloud-upload-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="openAddMemberModal()">
+                <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+
+
+    <!-- Search and Filter Section -->
+    <div class="search-section">
+        <div class="search-container">
+            <div class="search-icon">
+                <ion-icon name="search-outline"></ion-icon>
+            </div>
+            <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="filterMembers()" placeholder="Search members...">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab" [class.active]="statusFilter === 'all'" (click)="setFilter('all')">
+                All
+            </button>
+            <button class="filter-tab" [class.active]="statusFilter === 'active'" (click)="setFilter('active')">
+                Active
+            </button>
+            <button class="filter-tab" [class.active]="statusFilter === 'inactive'" (click)="setFilter('inactive')">
+                Inactive
+            </button>
+        </div>
+    </div>
+
+    <!-- Members List -->
+    <div class="members-list">
+        <div class="list-header">
+            <span>Members ({{filteredMembers.length}})</span>
+        </div>
+
+        <div class="members-container">
+            <div *ngFor="let member of filteredMembers" class="member-card" (click)="editMember(member)">
+                <div class="member-avatar">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+
+                <div class="member-info">
+                    <h3 class="member-name">{{ member.full_name }}</h3>
+                    <p class="member-phone">{{ member.phone_number }}</p>
+                    <div class="member-tags">
+                        <span class="status-tag" [class]="member.status">{{ member.status }}</span>
+                        <span class="gender-tag">{{ member.gender }}</span>
+                    </div>
+                </div>
+
+                <div class="member-meta">
+                    <span class="join-date">{{ member.date_joined | date:'MMM d, y' }}</span>
+                    <div class="member-actions">
+                        <button class="action-btn edit-btn" (click)="editMember(member); $event.stopPropagation()">
+                              <ion-icon name="create-outline"></ion-icon>
+                          </button>
+                        <button class="action-btn delete-btn" (click)="deleteMember(member); $event.stopPropagation()">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="filteredMembers.length === 0" class="empty-state">
+            <div class="empty-icon">
+                <ion-icon name="people-outline"></ion-icon>
+            </div>
+            <h3>No members found</h3>
+            <p>Add your first member to get started</p>
+            <button class="primary-btn" (click)="openAddMemberModal()">Add Member</button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading members...</p>
+        </div>
+    </div>
+</ion-content>

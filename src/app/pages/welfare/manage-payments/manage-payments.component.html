@@ -1,0 +1,122 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/admin"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Manage Payments</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="navigateToAddPayment()">
+                <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <!-- Search and Filter Section -->
+    <div class="search-section">
+        <div class="search-container">
+            <div class="search-icon">
+                <ion-icon name="search-outline"></ion-icon>
+            </div>
+            <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="filterPayments()" placeholder="Search payments...">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab" [class.active]="typeFilter === 'all'" (click)="setFilter('all')">
+                All
+            </button>
+            <button class="filter-tab" [class.active]="typeFilter === 'member_benefit'" (click)="setFilter('member_benefit')">
+                Member Benefit
+            </button>
+            <button class="filter-tab" [class.active]="typeFilter === 'operational_expense'" (click)="setFilter('operational_expense')">
+                Operational
+            </button>
+            <button class="filter-tab" [class.active]="typeFilter === 'event_expense'" (click)="setFilter('event_expense')">
+                Event
+            </button>
+        </div>
+    </div>
+
+    <!-- Payments List -->
+    <div class="payments-list">
+        <div class="list-header">
+            <span>Payments ({{filteredPayments.length}})</span>
+            <span class="total-amount">Total: {{formatCurrency(getTotalAmount())}}</span>
+        </div>
+
+        <div class="payments-container">
+            <div *ngFor="let payment of filteredPayments" class="payment-card">
+                <div class="payment-icon" [class]="getPaymentTypeClass(payment.payment_type)">
+                    <ion-icon [name]="getPaymentTypeIcon(payment.payment_type)"></ion-icon>
+                </div>
+
+                <div class="payment-info">
+                    <h3 class="payment-payee">{{ payment.payee_name }}</h3>
+                    <p class="payment-type">{{ payment.payment_type_display }}</p>
+                    <p class="payment-meta" *ngIf="payment.beneficiary_name">
+                        Beneficiary: {{ payment.beneficiary_name }}
+                    </p>
+                    <p class="payment-meta">
+                        {{ payment.payment_method_display }} • {{ payment.date | date:'MMM d, y' }}
+                    </p>
+                </div>
+
+                <div class="payment-amount">
+                    <span class="amount">{{ formatCurrency(payment.amount) }}</span>
+                    <div class="payment-actions">
+                        <button class="action-btn delete-btn" (click)="confirmDelete(payment)">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="filteredPayments.length === 0 && !loading" class="empty-state">
+            <div class="empty-icon">
+                <ion-icon name="card-outline"></ion-icon>
+            </div>
+            <h3>No payments found</h3>
+            <p>Add your first payment to get started</p>
+            <button class="primary-btn" (click)="navigateToAddPayment()">Add Payment</button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading payments...</p>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div *ngIf="showDeleteConfirm" class="confirmation-overlay">
+            <div class="confirmation-modal">
+                <div class="modal-header">
+                    <h3>Confirm Deletion</h3>
+                </div>
+                <div class="modal-content">
+                    <p>Are you sure you want to delete this payment?</p>
+                    <div class="payment-details">
+                        <strong>{{ paymentToDelete?.payee_name }}</strong>
+                        <br> {{ paymentToDelete?.payment_type_display }}
+                        <br>
+                        <span *ngIf="paymentToDelete?.beneficiary_name">
+                            Beneficiary: {{ paymentToDelete?.beneficiary_name }}<br>
+                        </span> {{ paymentToDelete?.payment_method_display }} • {{ formatCurrency(paymentToDelete?.amount) }}
+                        <br>
+                        <small>{{ paymentToDelete?.date | date:'MMM d, y' }}</small>
+                    </div>
+                    <p class="warning-text">This action cannot be undone!</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="secondary-btn" (click)="cancelDelete()">Cancel</button>
+                    <button class="danger-btn" (click)="deletePayment()">Delete Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

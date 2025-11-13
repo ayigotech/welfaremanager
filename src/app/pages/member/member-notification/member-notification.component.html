@@ -1,0 +1,119 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/member"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Notifications</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="notifications-content">
+    <!-- Payment Reminders -->
+    <div class="section">
+        <h2 class="section-title">Payment Reminders</h2>
+
+        <div class="reminder-cards">
+            <!-- Dues Reminder -->
+            <div class="reminder-card urgent">
+                <div class="reminder-icon">
+                    <ion-icon name="warning-outline"></ion-icon>
+                </div>
+                <div class="reminder-content">
+                    <h3>Outstanding Dues</h3>
+                    <p class="reminder-text">You have unpaid dues for 2023 and 2024</p>
+                    <div class="amount-due">
+                        <span class="label">Total Due:</span>
+                        <span class="amount">₵{{getTotalDuesDue() | number}}</span>
+                    </div>
+                    <div class="payment-options">
+                        <p class="payment-instruction">Pay via Mobile Money:</p>
+                        <div class="momo-number">{{ formatMomoNumber(welfareMomo) }}</div>
+                        <p class="alternative">Or visit Welfare Department to make payment</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transport Levy Reminder -->
+            <div class="reminder-card urgent">
+                <div class="reminder-icon">
+                    <ion-icon name="bus-outline"></ion-icon>
+                </div>
+                <div class="reminder-content">
+                    <h3>Transport Levy Due</h3>
+                    <p class="reminder-text">Outstanding transport levies for affected members</p>
+                    <div class="amount-due">
+                        <span class="label">Total Due:</span>
+                        <span class="amount">₵{{getTotalTransportDue() | number}}</span>
+                    </div>
+                    <div class="payment-options">
+                        <p class="payment-instruction">Pay via Mobile Money:</p>
+                        <div class="momo-number">{{ formatMomoNumber(welfareMomo) }}</div>
+                        <p class="alternative">Or visit Welfare Department to make payment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Payments -->
+    <div class="section">
+        <h2 class="section-title">Recent Payments</h2>
+
+        <div *ngIf="recentPayments.length > 0; else noPayments" class="payments-list">
+            <div class="payment-card" *ngFor="let payment of recentPayments">
+                <div class="payment-header">
+                    <div class="payment-type" [class]="getPaymentTypeClass(payment.type)">
+                        {{payment.type}}
+                    </div>
+                    <div class="payment-amount">₵{{payment.amount | number}}</div>
+                </div>
+                <div class="payment-details">
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span class="value">{{payment.date | date:'MMM d, yyyy'}}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">For Year:</span>
+                        <span class="value">{{payment.year}}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Details:</span>
+                        <span class="value">{{payment.details}}</span>
+                    </div>
+                </div>
+                <div class="payment-receipt">
+                    <ion-icon name="receipt-outline"></ion-icon>
+                    <span>Receipt: {{payment.receiptNumber}}</span>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #noPayments>
+            <div class="empty-state payment-empty">
+                <ion-icon name="card-outline" class="empty-icon"></ion-icon>
+                <h3>No Recent Payments</h3>
+                <p>Visit the Welfare Department to make your first payment</p>
+                <div class="contact-info">
+                    <p><strong>Welfare Department</strong></p>
+                    <p>Open: Mon-Fri, 8:00 AM - 5:00 PM</p>
+                    <p>Location: Church Office Building</p>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="action-buttons">
+            <button class="action-btn primary" (click)="viewPaymentHistory()">
+        <ion-icon name="list-outline"></ion-icon>
+        View Full Payment History
+        </button>
+            <button class="action-btn outline" (click)="contactWelfare()">
+            <ion-icon name="call-outline"></ion-icon>
+            Contact Welfare Department
+        </button>
+        </div>
+    </div>
+</ion-content>

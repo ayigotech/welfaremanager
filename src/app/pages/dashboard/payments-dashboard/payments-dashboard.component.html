@@ -1,0 +1,223 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/dashboard"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Payments Insights</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="refreshData()">
+                <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+    <!-- Financial Health Summary -->
+    <div class="health-section">
+        <div class="health-grid">
+            <!-- Financial Balance -->
+            <div class="health-card" [class.positive]="(insights?.monthly_surplus || 0) >= 0" [class.negative]="(insights?.monthly_surplus || 0) < 0">
+                <div class="health-icon">
+                    <ion-icon [name]="(insights?.monthly_surplus || 0) >= 0 ? 'trending-up-outline' : 'trending-down-outline'"></ion-icon>
+                </div>
+                <div class="health-content">
+                    <h3>{{ formatCurrency(insights?.monthly_surplus || 0) }}</h3>
+                    <p>Monthly {{ (insights?.monthly_surplus || 0) >= 0 ? 'Surplus' : 'Deficit' }}</p>
+                </div>
+            </div>
+
+            <!-- Spending Ratio -->
+            <div class="health-card">
+                <div class="health-icon ratio">
+                    <ion-icon name="pie-chart-outline"></ion-icon>
+                </div>
+                <div class="health-content">
+                    <h3>{{ insights?.spending_ratio || 0 }}%</h3>
+                    <p>Spending vs Income</p>
+                    <!-- Explanatory Badge -->
+                    <span class="ratio-badge" [class]="getSpendingRatioStatus()">
+            {{ getSpendingRatioText() }}
+        </span>
+                </div>
+            </div>
+
+            <!-- Welfare Efficiency -->
+            <div class="health-card">
+                <div class="health-icon welfare">
+                    <ion-icon name="heart-outline"></ion-icon>
+                </div>
+                <div class="health-content">
+                    <h3>{{ insights?.welfare_ratio || 0 }}%</h3>
+                    <p>Welfare vs Total Spending</p>
+                    <!-- Explanatory Badge -->
+                    <span class="ratio-badge" [class]="getWelfareRatioStatus()">
+            {{ getWelfareRatioText() }}
+        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments Overview -->
+    <div class="summary-section">
+        <div class="summary-grid">
+            <!-- Total Yearly Payments -->
+            <div class="summary-card">
+                <div class="summary-icon total">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.total_year_payments || 0) }}</h3>
+                    <p>Total {{ currentYear }} Payments</p>
+                </div>
+            </div>
+
+            <!-- Current Month -->
+            <div class="summary-card">
+                <div class="summary-icon current">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.current_month_total || 0) }}</h3>
+                    <p>Current Month</p>
+                    <span class="change-indicator" [class.positive]="!isPositiveGrowth()" [class.negative]="isPositiveGrowth()">
+                    {{ getGrowthSymbol() }}{{ getMonthlyGrowth() }}%
+                </span>
+                </div>
+            </div>
+
+            <!-- Average Payment -->
+            <div class="summary-card">
+                <div class="summary-icon average">
+                    <ion-icon name="analytics-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.average_payment_amount || 0) }}</h3>
+                    <p>Average Payment</p>
+                </div>
+            </div>
+
+            <!-- Total Payments Count -->
+            <div class="summary-card">
+                <div class="summary-icon count">
+                    <ion-icon name="card-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.total_payments_count || 0 }}</h3>
+                    <p>Total Payments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Type Breakdown -->
+    <div class="insights-section">
+        <!-- Payment Type Distribution -->
+        <div class="insight-card">
+            <h3 class="insight-title">Payment Type Distribution ({{ currentYear }})</h3>
+            <div class="type-breakdown">
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon member-benefits">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Member Benefits</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.member_benefits_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('member_benefits') }}%</span>
+                    </div>
+                </div>
+
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon operational">
+                            <ion-icon name="business-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Operational Expenses</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.operational_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('operational') }}%</span>
+                    </div>
+                </div>
+
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon events">
+                            <ion-icon name="calendar-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Event Expenses</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.event_expenses_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('events') }}%</span>
+                    </div>
+                </div>
+
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon other">
+                            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Other Expenses</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.other_expenses_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('other') }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends -->
+        <!-- <div class="insight-card">
+            <h3 class="insight-title">Monthly Spending Trends (Last 6 Months)</h3>
+            <div class="trends-grid">
+                <div *ngFor="let month of insights?.monthly_trends" class="trend-item">
+                    <div class="trend-month">{{ month.month }}</div>
+                    <div class="trend-amount">{{ formatCurrency(month.total) }}</div>
+                    <div class="trend-breakdown">
+                        <span class="breakdown-item benefits">{{ formatCurrency(month.member_benefits) }}</span>
+                        <span class="breakdown-item operational">{{ formatCurrency(month.operational) }}</span>
+                        <span class="breakdown-item events">{{ formatCurrency(month.event_expenses) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Financial Health Details -->
+        <div class="insight-card">
+            <h3 class="insight-title">Financial Health Details</h3>
+            <div class="health-details">
+                <div class="health-item">
+                    <div class="health-metric">
+                        <span class="metric-value">{{ formatCurrency(insights?.total_receipts || 0) }}</span>
+                        <span class="metric-label">Total Receipts ({{ currentYear }})</span>
+                    </div>
+                </div>
+
+                <div class="health-item">
+                    <div class="health-metric">
+                        <span class="metric-value">{{ formatCurrency(insights?.total_year_payments || 0) }}</span>
+                        <span class="metric-label">Total Payments ({{ currentYear }})</span>
+                    </div>
+                </div>
+
+                <div class="health-item">
+                    <div class="health-metric">
+                        <span class="metric-value">{{ formatCurrency(insights?.yearly_balance || 0) }}</span>
+                        <span class="metric-label">Yearly Balance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading payments insights...</p>
+    </div>
+</ion-content>

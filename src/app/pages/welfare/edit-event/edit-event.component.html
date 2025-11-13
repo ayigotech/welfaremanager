@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/events"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Edit Event</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="updateEvent()" [disabled]="eventForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Update</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="form-container">
+        <form class="event-form" [formGroup]="eventForm">
+            <!-- Event Type -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="event_type" required>
+                    <option value="">Select Event Type</option>
+                    <option value="funeral">Funeral</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="child_dedication">Child Dedication</option>
+                    <option value="sickness">Sickness</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="eventForm.get('event_type')?.invalid && eventForm.get('event_type')?.touched">
+                Event type is required
+            </div>
+
+            <!-- Member Selection -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="member" required>
+                    <option value="">Select Member</option>
+                    <option *ngFor="let member of members" [value]="member.id">
+                      {{ member.full_name }} ({{ member.phone_number }})
+                  </option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="eventForm.get('member')?.invalid && eventForm.get('member')?.touched">
+                Member selection is required
+            </div>
+
+            <!-- Event Date -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <input type="date" class="form-input" formControlName="event_date" required>
+            </div>
+            <div class="error-message" *ngIf="eventForm.get('event_date')?.invalid && eventForm.get('event_date')?.touched">
+                Event date is required
+            </div>
+
+            <!-- Venue -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="location-outline"></ion-icon>
+                </div>
+                <input type="text" class="form-input" placeholder="Venue (optional)" formControlName="venue">
+            </div>
+
+            <!-- Transport Levy Amount -->
+            <div class="input-group amount-input-group">
+                <div class="input-icon">
+                    <ion-icon name="bus-outline"></ion-icon>
+                </div>
+                <input type="number" class="form-input" placeholder="Transport Levy Amount" formControlName="levy_amount" step="0.01" min="0">
+            </div>
+            <div class="error-message" *ngIf="eventForm.get('levy_amount')?.invalid && eventForm.get('levy_amount')?.touched">
+                Valid levy amount is required
+            </div>
+
+            <!-- Levy Paid Status -->
+            <div class="checkbox-group" *ngIf="eventForm.get('levy_amount')?.value > 0">
+                <label class="checkbox-label">
+                    <input type="checkbox" formControlName="is_levy_paid" class="checkbox-input">
+                    <span class="checkbox-custom"></span>
+                    Transport levy has been collected
+                </label>
+            </div>
+
+            <!-- Description -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                </div>
+                <input class="form-input" placeholder="Description (optional)" formControlName="description">
+            </div>
+        </form>
+
+        <div class="form-actions">
+            <button class="secondary-btn" (click)="goBack()">Cancel</button>
+            <button class="primary-btn" (click)="updateEvent()" [disabled]="eventForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Update Event</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </button>
+        </div>
+    </div>
+</ion-content>

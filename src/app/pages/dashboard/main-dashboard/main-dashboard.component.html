@@ -1,0 +1,163 @@
+<ion-header [translucent]="true">
+
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Dashboard</ion-title>
+        <!-- <ion-button (click)="refreshData()">
+            <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+        </ion-button> -->
+    </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div class="logo-circle">
+            <ion-icon name="heart" class="logo-icon"></ion-icon>
+        </div>
+        <h1 class="welcome-title">Welcome, {{user?.name}}</h1>
+        <p class="welcome-subtitle">Church Welfare Management System</p>
+        <div class="church-info" *ngIf="user?.church_name">
+            <ion-icon name="business-outline"></ion-icon>
+            {{ user.church_name }}
+        </div>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div class="stats-section">
+        <h2 class="section-title">Quick Overview</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon members">
+                    <ion-icon name="people-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ stats?.total_members || 0 }}</h3>
+                    <p>Total Members</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon receipts">
+                    <ion-icon name="receipt-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ formatCurrency(stats?.total_receipts || 0) }}</h3>
+                    <p>Total Receipts: (ytd)</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon payments">
+                    <ion-icon name="card-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ formatCurrency(stats?.total_payments || 0) }}</h3>
+                    <p>Total Payments (ytd)</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon events">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ stats?.total_events || 0 }}</h3>
+                    <p>Total Events</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Section -->
+    <div class="actions-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+            <!-- Membership Card -->
+            <ion-card class="action-card" (click)="navigateToMembership()">
+                <ion-card-content>
+                    <div class="action-icon members">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <h3>Membership</h3>
+                    <p>Manage church members and profiles</p>
+                    <div class="action-stats">
+                        <span class="stat-badge">{{ stats?.active_members || 0 }} active</span>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Receipts Card -->
+            <ion-card class="action-card" (click)="navigateToReceipts()">
+                <ion-card-content>
+                    <div class="action-icon receipts">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                    </div>
+                    <h3>Receipts</h3>
+                    <p>Manage income and contributions</p>
+                    <div class="action-stats">
+                        <span class="stat-badge">{{ formatCurrency(stats?.monthly_receipts || 0) }} this year</span>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Payments Card -->
+            <ion-card class="action-card" (click)="navigateToPayments()">
+                <ion-card-content>
+                    <div class="action-icon payments">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <h3>Payments</h3>
+                    <p>Manage expenses and benefits</p>
+                    <div class="action-stats">
+                        <span class="stat-badge">{{ formatCurrency(stats?.monthly_payments || 0) }} this year</span>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Events Card -->
+            <ion-card class="action-card" (click)="navigateToEvents()">
+                <ion-card-content>
+                    <div class="action-icon events">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                    </div>
+                    <h3>Events</h3>
+                    <p>Manage church events and activities</p>
+                    <div class="action-stats">
+                        <span class="stat-badge">{{ stats?.upcoming_events || 0 }} upcoming</span>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div class="activity-section" *ngIf="recentActivity.length > 0">
+        <h2 class="section-title">Recent Activity</h2>
+        <div class="activity-list">
+            <div *ngFor="let activity of recentActivity" class="activity-item">
+                <div class="activity-icon" [class]="activity.type">
+                    <ion-icon [name]="getActivityIcon(activity.type)"></ion-icon>
+                </div>
+                <div class="activity-content">
+                    <p class="activity-text">{{ activity.description }}</p>
+                    <span class="activity-time">{{ activity.time }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading dashboard...</p>
+    </div>
+</ion-content>

@@ -1,0 +1,147 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/dashboard"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Membership Insights</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="refreshData()">
+                <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+    <!-- Summary Cards -->
+    <div class="summary-section">
+        <div class="summary-grid">
+            <!-- Total Members -->
+            <div class="summary-card">
+                <div class="summary-icon total">
+                    <ion-icon name="people-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.total_members || 0 }}</h3>
+                    <p>Total Members</p>
+                </div>
+            </div>
+
+            <!-- Active Members -->
+            <div class="summary-card">
+                <div class="summary-icon active">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.active_members || 0 }}</h3>
+                    <p>Active Members</p>
+                </div>
+            </div>
+
+            <!-- Compliance Rate -->
+            <div class="summary-card">
+                <div class="summary-icon compliance">
+                    <ion-icon name="trending-up-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.compliance_rate || 0 }}%</h3>
+                    <p>Dues Compliance</p>
+                </div>
+            </div>
+
+            <!-- Regular Contributors -->
+            <div class="summary-card">
+                <div class="summary-icon contributors">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.regular_contributors || 0 }}</h3>
+                    <p>Regular Contributors</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts and Insights Section -->
+    <div class="insights-section">
+        <!-- Gender Distribution -->
+        <div class="insight-card">
+            <h3 class="insight-title">Gender Distribution</h3>
+            <div class="gender-stats">
+                <div class="gender-item">
+                    <div class="gender-icon male">
+                        <ion-icon name="male-outline"></ion-icon>
+                    </div>
+                    <div class="gender-info">
+                        <span class="gender-count">{{ insights?.male_count || 0 }}</span>
+                        <span class="gender-percentage">{{ getGenderPercentage('male') }}%</span>
+                    </div>
+                </div>
+                <div class="gender-item">
+                    <div class="gender-icon female">
+                        <ion-icon name="female-outline"></ion-icon>
+                    </div>
+                    <div class="gender-info">
+                        <span class="gender-count">{{ insights?.female_count || 0 }}</span>
+                        <span class="gender-percentage">{{ getGenderPercentage('female') }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Membership Status -->
+        <div class="insight-card">
+            <h3 class="insight-title">Membership Status</h3>
+            <div class="status-grid">
+                <div *ngFor="let status of insights?.status_breakdown" class="status-item">
+                    <div class="status-badge" [class]="status.status">
+                        {{ status.count }}
+                    </div>
+                    <span class="status-label">{{ status.status | titlecase }}</span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Outstanding Dues -->
+        <div class="insight-card">
+            <!-- <h3 class="insight-title">Outstanding Dues</h3> -->
+            <div class="dues-summary">
+                <div class="dues-stat">
+
+                    <span class="dues-label">Members with Outstanding Dues</span>
+                    <span class="dues-count">{{ insights?.members_with_outstanding_dues || 0 }}</span>
+                </div>
+                <div class="dues-amount">
+
+                    <span class="amount-label">Total Outstanding</span>
+                    <span class="amount">{{ formatCurrency(insights?.total_outstanding_amount || 0) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Contributors -->
+        <div class="insight-card">
+            <h3 class="insight-title">Top Contributors</h3>
+            <div class="contributors-list">
+                <div *ngFor="let contributor of insights?.top_contributors; let i = index" class="contributor-item">
+                    <div class="contributor-rank">{{ i + 1 }}</div>
+                    <div class="contributor-info">
+                        <span class="contributor-name">{{ contributor.name }}</span>
+                        <span class="contributor-amount">{{ formatCurrency(contributor.amount) }}</span>
+                    </div>
+                </div>
+                <div *ngIf="!insights?.top_contributors?.length" class="empty-contributors">
+                    No contribution data available
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading membership insights...</p>
+    </div>
+</ion-content>

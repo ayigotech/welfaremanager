@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/admin"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Yearly Dues</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="navigateToAddDues()">
+                <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-refresher slot="fixed" (ionRefresh)="refreshPage($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <!-- Yearly Dues List -->
+    <div class="dues-list">
+        <div class="list-header">
+            <span>Yearly Dues Configuration</span>
+            <!-- <span class="info-text">Sets monthly contribution amount for each year</span> -->
+        </div>
+
+        <div class="dues-container">
+            <div *ngFor="let due of yearlyDues" class="dues-card">
+                <div class="dues-avatar">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+
+                <div class="dues-info">
+                    <h3 class="dues-year">{{ due.year }}</h3>
+                    <p class="dues-amount">Monthly Amount: {{ formatCurrency(due.monthly_amount) }}</p>
+                    <p class="dues-meta">
+                        Created: {{ due.created_at | date:'MMM d, y' }}
+                    </p>
+                </div>
+
+                <div class="dues-actions">
+                    <button class="action-btn edit-btn" (click)="editDues(due); $event.stopPropagation()">
+                        <ion-icon name="create-outline"></ion-icon>
+                    </button>
+                    <button class="action-btn delete-btn" (click)="confirmDelete(due); $event.stopPropagation()">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="yearlyDues.length === 0 && !loading" class="empty-state">
+            <div class="empty-icon">
+                <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+            <h3>No yearly dues configured</h3>
+            <p>Set up yearly dues to define monthly contribution amounts</p>
+            <button class="primary-btn" (click)="navigateToAddDues()">Add Yearly Dues</button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading yearly dues...</p>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div *ngIf="showDeleteConfirm" class="confirmation-overlay">
+            <div class="confirmation-modal">
+                <div class="modal-header">
+                    <h3>Confirm Deletion</h3>
+                </div>
+                <div class="modal-content">
+                    <p>Are you sure you want to delete the yearly dues configuration for {{ duesToDelete?.year }}?</p>
+                    <div class="dues-details">
+                        <strong>Year: {{ duesToDelete?.year }}</strong>
+                        <br> Monthly Amount: {{ formatCurrency(duesToDelete?.monthly_amount) }}
+                    </div>
+                    <p class="warning-text">This action cannot be undone!</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="secondary-btn" (click)="cancelDelete()">Cancel</button>
+                    <button class="danger-btn" (click)="deleteDues()">Delete Dues</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

@@ -1,2 +1,43 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+    /** Primary Color - F54927 **/
+    --ion-color-primary: #F54927;
+    --ion-color-primary-rgb: 245, 73, 39;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #d84022;
+    --ion-color-primary-tint: #f65b3d;
+    /** Secondary Color - F5B027 **/
+    --ion-color-secondary: #F5B027;
+    --ion-color-secondary-rgb: 245, 176, 39;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #d89b22;
+    --ion-color-secondary-tint: #f6b83d;
+    /** Background & Text **/
+    --ion-background-color: #ffffff;
+    --ion-text-color: #333333;
+    /** Card & Item Backgrounds **/
+    --ion-item-background: #ffffff;
+    --ion-card-background: #ffffff;
+    /** Toolbar **/
+    --ion-toolbar-background: #F54927;
+    --ion-toolbar-color: #ffffff;
+    /** Borders **/
+    --ion-border-color: #e0e0e0;
+}
+
+
+/* Force light theme */
+
+@media (prefers-color-scheme: dark) {
+     :root {
+        --ion-background-color: #ffffff;
+        --ion-text-color: #333333;
+        --ion-item-background: #ffffff;
+        --ion-card-background: #ffffff;
+        --ion-toolbar-background: #F54927;
+        --ion-toolbar-color: #ffffff;
+    }
+}

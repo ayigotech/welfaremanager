@@ -1,0 +1,95 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/members"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Add New Member</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="saveMember()" [disabled]="memberForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Save</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="form-container">
+        <form class="member-form" [formGroup]="memberForm">
+            <!-- Full Name -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <input type="text" class="form-input" placeholder="Full Name" formControlName="full_name" required>
+            </div>
+            <div class="error-message" *ngIf="memberForm.get('full_name')?.invalid && memberForm.get('full_name')?.touched">
+                Full name is required
+            </div>
+
+            <!-- Phone Number -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="call-outline"></ion-icon>
+                </div>
+                <input type="tel" class="form-input" placeholder="Phone Number" formControlName="phone_number" required>
+            </div>
+            <div class="error-message" *ngIf="memberForm.get('phone_number')?.invalid && memberForm.get('phone_number')?.touched">
+                Valid phone number is required
+            </div>
+
+            <!-- Gender -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="male-female-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="memberForm.get('gender')?.invalid && memberForm.get('gender')?.touched">
+                Gender is required
+            </div>
+
+            <!-- Status -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="stats-chart-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="transferred">Transferred</option>
+                    <option value="deceased">Deceased</option>
+                    <option value="privileged">Privileged</option>
+                </select>
+            </div>
+
+            <!-- Location -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="location-outline"></ion-icon>
+                </div>
+                <input class="form-input" placeholder="Location Address" formControlName="location">
+            </div>
+
+            <!-- Date Joined -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <input type="date" class="form-input" formControlName="date_joined">
+            </div>
+        </form>
+
+        <div class="form-actions">
+            <button class="secondary-btn" (click)="goBack()">Cancel</button>
+            <button class="primary-btn" (click)="saveMember()" [disabled]="memberForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Save Member</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </button>
+        </div>
+    </div>
+</ion-content>

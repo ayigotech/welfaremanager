@@ -1,0 +1,129 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/admin"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Manage User Roles</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="management-container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-icon">
+                    <ion-icon name="search-outline"></ion-icon>
+                </div>
+                <input type="text" class="search-input" placeholder="Search users by name, email or phone..." [value]="searchTerm" (input)="searchUsers($event)">
+            </div>
+        </div>
+
+        <!-- Users List -->
+        <div class="users-list">
+            <!-- Loading State -->
+            <div class="loading-state" *ngIf="isLoading">
+                <div class="loading-spinner"></div>
+                <p>Loading users...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" *ngIf="!isLoading && filteredUsers.length === 0">
+                <div class="empty-icon">
+                    <ion-icon name="people-outline"></ion-icon>
+                </div>
+                <h3>No Users Found</h3>
+                <p *ngIf="searchTerm">No users match your search criteria</p>
+                <p *ngIf="!searchTerm">No users available</p>
+            </div>
+
+            <!-- Users Grid -->
+            <div class="users-container" *ngIf="!isLoading && filteredUsers.length > 0">
+                <div class="list-header">
+                    <span>User Roles Management</span>
+                    <span class="total-count">{{ filteredUsers.length }} user(s) found</span>
+                </div>
+
+                <div class="users-grid">
+                    <div class="user-card" *ngFor="let user of filteredUsers">
+                        <!-- User Avatar and Basic Info -->
+                        <div class="user-header">
+                            <div class="user-avatar">
+                                <ion-icon name="person-circle-outline"></ion-icon>
+                            </div>
+                            <div class="user-info">
+                                <h3 class="user-name">{{ user.name }}</h3>
+                                <p class="user-contact">{{ user.phone_number }}</p>
+                                <p class="user-email">{{ user.email }}</p>
+                                <p class="user-joined">Joined: {{ user.date_joined }}</p>
+                            </div>
+                            <div class="user-status">
+                                <span class="status-tag" [class.active]="user.status === 'active'" [class.inactive]="user.status !== 'active'">
+                                    {{ user.status }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Role Management Section -->
+                        <div class="roles-section">
+                            <h4 class="roles-title">User Roles</h4>
+                            <div class="roles-grid">
+                                <!-- Member Role -->
+                                <div class="role-item">
+                                    <label class="role-label" [style.color]="getRoleColor('is_member')">
+                                        {{ getRoleDisplayName('is_member') }}
+                                    </label>
+                                    <div class="toggle-container">
+                                        <input type="checkbox" id="member-{{ user.id }}" [checked]="user.is_member" (change)="toggleUserRole(user, 'is_member')" class="toggle-input">
+                                        <label for="member-{{ user.id }}" class="toggle-slider"></label>
+                                    </div>
+                                </div>
+
+                                <!-- Welfare Admin Role -->
+                                <div class="role-item">
+                                    <label class="role-label" [style.color]="getRoleColor('is_welfare_admin')">
+                                        {{ getRoleDisplayName('is_welfare_admin') }}
+                                    </label>
+                                    <div class="toggle-container">
+                                        <input type="checkbox" id="welfare-{{ user.id }}" [checked]="user.is_welfare_admin" (change)="toggleUserRole(user, 'is_welfare_admin')" class="toggle-input">
+                                        <label for="welfare-{{ user.id }}" class="toggle-slider"></label>
+                                    </div>
+                                </div>
+
+                                <!-- Church Admin Role -->
+                                <div class="role-item">
+                                    <label class="role-label" [style.color]="getRoleColor('is_church_admin')">
+                                        {{ getRoleDisplayName('is_church_admin') }}
+                                    </label>
+                                    <div class="toggle-container">
+                                        <input type="checkbox" id="church-{{ user.id }}" [checked]="user.is_church_admin" (change)="toggleUserRole(user, 'is_church_admin')" class="toggle-input">
+                                        <label for="church-{{ user.id }}" class="toggle-slider"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Active Roles Summary -->
+                        <div class="active-roles">
+                            <h4 class="active-roles-title">Active Roles:</h4>
+                            <div class="active-roles-tags">
+                                <span *ngIf="user.is_member" class="role-tag" [style.background]="getRoleColor('is_member') + '20'" [style.color]="getRoleColor('is_member')">
+                                    {{ getRoleDisplayName('is_member') }}
+                                </span>
+                                <span *ngIf="user.is_welfare_admin" class="role-tag" [style.background]="getRoleColor('is_welfare_admin') + '20'" [style.color]="getRoleColor('is_welfare_admin')">
+                                    {{ getRoleDisplayName('is_welfare_admin') }}
+                                </span>
+                                <span *ngIf="user.is_church_admin" class="role-tag" [style.background]="getRoleColor('is_church_admin') + '20'" [style.color]="getRoleColor('is_church_admin')">
+                                    {{ getRoleDisplayName('is_church_admin') }}
+                                </span>
+                                <span *ngIf="!user.is_member && !user.is_welfare_admin && !user.is_church_admin" class="role-tag no-roles">
+                                    No Roles Assigned
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

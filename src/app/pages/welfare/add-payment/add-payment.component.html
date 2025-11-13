@@ -1,0 +1,127 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/payments"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Add New Payment</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="savePayment()" [disabled]="paymentForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Save</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="form-container">
+        <form class="payment-form" [formGroup]="paymentForm">
+            <!-- Payment Type -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="card-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="payment_type" required (change)="onPaymentTypeChange()">
+                    <option value="">Select Payment Type</option>
+                    <option value="member_benefit">Member Benefit</option>
+                    <option value="operational_expense">Operational Expense</option>
+                    <option value="event_expense">Event Expense</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="paymentForm.get('payment_type')?.invalid && paymentForm.get('payment_type')?.touched">
+                Payment type is required
+            </div>
+
+            <!-- Beneficiary Member (only for member_benefit) -->
+            <div class="input-group" *ngIf="showBeneficiaryField">
+                <div class="input-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="beneficiary_member">
+                    <option value="">Select Beneficiary Member</option>
+                    <option *ngFor="let member of members" [value]="member.id">
+                        {{ member.full_name }} ({{ member.phone_number }})
+                    </option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="showBeneficiaryField && paymentForm.get('beneficiary_member')?.invalid && paymentForm.get('beneficiary_member')?.touched">
+                Beneficiary member is required for member benefit payments
+            </div>
+
+            <!-- Payee Name -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+                <input type="text" class="form-input" placeholder="Payee Name" formControlName="payee_name" required>
+            </div>
+            <div class="error-message" *ngIf="paymentForm.get('payee_name')?.invalid && paymentForm.get('payee_name')?.touched">
+                Payee name is required
+            </div>
+
+            <!-- Amount -->
+            <div class="input-group amount-input-group">
+                <div class="input-icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <input type="number" class="form-input" placeholder="Amount" formControlName="amount" step="0.01" min="0.01" required>
+            </div>
+            <div class="error-message" *ngIf="paymentForm.get('amount')?.invalid && paymentForm.get('amount')?.touched">
+                Valid amount is required (minimum ₵0.01)
+            </div>
+
+            <!-- Payment Method -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="wallet-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="payment_method" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="cash">Cash</option>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="mobile_money">Mobile Money</option>
+                    <option value="check">Check</option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="paymentForm.get('payment_method')?.invalid && paymentForm.get('payment_method')?.touched">
+                Payment method is required
+            </div>
+
+            <!-- Date -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <input type="date" class="form-input" formControlName="date" required>
+            </div>
+            <div class="error-message" *ngIf="paymentForm.get('date')?.invalid && paymentForm.get('date')?.touched">
+                Date is required
+            </div>
+
+            <!-- External Receipt Number -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="receipt-outline"></ion-icon>
+                </div>
+                <input type="text" class="form-input" placeholder="External Receipt Number (optional)" formControlName="receipt_number">
+            </div>
+
+            <!-- Description -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                </div>
+                <input class="form-input" placeholder="Description (optional)" formControlName="description">
+            </div>
+        </form>
+
+        <div class="form-actions">
+            <button class="secondary-btn" (click)="goBack()">Cancel</button>
+            <button class="primary-btn" (click)="savePayment()" [disabled]="paymentForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Save Payment</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </button>
+        </div>
+    </div>
+</ion-content>

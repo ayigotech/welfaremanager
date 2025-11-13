@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Church Welfare</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="home-content">
+    <div class="welcome-section">
+        <div class="logo-circle">
+            <ion-icon name="heart-outline" class="logo-icon"></ion-icon>
+        </div>
+        <h1 class="welcome-title">Welcome Back</h1>
+        <p class="welcome-subtitle">Continue to your dashboard</p>
+    </div>
+
+    <div class="actions-section" *ngIf="user; else noUser">
+        <!-- Member Button - Show for all members -->
+        <button class="custom-btn btn-outline action-btn" (click)="navigateToMember()">
+      <div class="btn-content">
+        <ion-icon name="people-outline" class="btn-icon"></ion-icon>
+        <div class="btn-text">
+          <span class="btn-title">Continue as Member</span>
+          <span class="btn-subtitle">Access member info</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="btn-arrow"></ion-icon>
+      </div>
+    </button>
+
+        <!-- Welfare Admin Button - Show for welfare admins -->
+        <button *ngIf="isWelfareAdmin()" class="custom-btn btn-outline action-btn" (click)="navigateToWelfareAdmin()">
+      <div class="btn-content">
+        <ion-icon name="shield-checkmark-outline" class="btn-icon"></ion-icon>
+        <div class="btn-text">
+          <span class="btn-title">Welfare Admin</span>
+          <span class="btn-subtitle">Manage welfare services</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="btn-arrow"></ion-icon>
+      </div>
+    </button>
+
+        <!-- Dashboard Button - Show for church admins -->
+        <button *ngIf="isChurchAdmin() || isWelfareAdmin()" class="custom-btn btn-outline action-btn" (click)="navigateToDashboard()">
+      <div class="btn-content">
+        <ion-icon name="bar-chart-outline" class="btn-icon"></ion-icon>
+        <div class="btn-text">
+          <span class="btn-title">Dashboard</span>
+          <span class="btn-subtitle">View analytics & reports</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="btn-arrow"></ion-icon>
+      </div>
+    </button>
+    </div>
+
+    <ng-template #noUser>
+        <div class="loading-section">
+            <p>No user information found. Redirecting to login...</p>
+        </div>
+    </ng-template>
+
+    <div class="user-info" *ngIf="user">
+        <p class="user-name">Logged in as: {{ user.name }}</p>
+        <p class="user-role">{{ getUserRole() }}</p>
+    </div>
+</ion-content>

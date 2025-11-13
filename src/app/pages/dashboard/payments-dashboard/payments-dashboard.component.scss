@@ -1,0 +1,634 @@
+.dashboard-content {
+    --background: #f8f9fa;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+
+/* Financial Health Section */
+
+.health-section {
+    margin: 1rem;
+}
+
+.health-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+}
+
+.health-card {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    &.positive {
+        border-left: 3px solid #27ae60;
+    }
+    &.negative {
+        border-left: 3px solid #e74c3c;
+    }
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.health-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.ratio {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    }
+    &.welfare {
+        background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    }
+    ion-icon {
+        font-size: 1.1rem;
+        color: white;
+    }
+}
+
+.health-content {
+    h3 {
+        font-size: 1.1rem;
+        font-weight: 300;
+        margin: 0 0 0.2rem 0;
+        line-height: 1.2;
+    }
+    p {
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: #7f8c8d;
+        margin: 0;
+        line-height: 1.2;
+    }
+    .positive & {
+        h3 {
+            color: #27ae60;
+        }
+    }
+    .negative & {
+        h3 {
+            color: #e74c3c;
+        }
+    }
+    .health-card:not(.positive):not(.negative) & {
+        h3 {
+            color: #2c3e50;
+        }
+    }
+}
+
+
+/* Payments Overview Section */
+
+.summary-section {
+    margin: 1rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.3s ease;
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.summary-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.total {
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    }
+    &.current {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    }
+    &.average {
+        background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    }
+    &.count {
+        background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    }
+    ion-icon {
+        font-size: 1.1rem;
+        color: white;
+    }
+}
+
+.summary-content {
+    h3 {
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: #2c3e50;
+        margin: 0 0 0.2rem 0;
+        line-height: 1.2;
+    }
+    p {
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: #7f8c8d;
+        margin: 0 0 0.2rem 0;
+        line-height: 1.2;
+    }
+}
+
+.change-indicator {
+    font-size: 0.7rem;
+    font-weight: 300;
+    padding: 0.1rem 0.5rem;
+    border-radius: 0.5rem;
+    line-height: 1.2;
+    &.positive {
+        background: rgba(39, 174, 96, 0.1);
+        color: #27ae60;
+    }
+    &.negative {
+        background: rgba(231, 76, 60, 0.1);
+        color: #e74c3c;
+    }
+}
+
+
+/* Insights Section */
+
+.insights-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.insight-card {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.insight-title {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #2c3e50;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    line-height: 1.3;
+}
+
+
+/* Type Breakdown */
+
+.type-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.type-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    background: #f8f9fa;
+    border-radius: 0.6rem;
+    transition: all 0.3s ease;
+    &:hover {
+        background: #e9ecef;
+        transform: translateX(2px);
+    }
+}
+
+.type-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.type-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.member-benefits {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498db;
+    }
+    &.operational {
+        background: rgba(231, 76, 60, 0.1);
+        color: #e74c3c;
+    }
+    &.events {
+        background: rgba(243, 156, 18, 0.1);
+        color: #f39c12;
+    }
+    &.other {
+        background: rgba(149, 165, 166, 0.1);
+        color: #95a5a6;
+    }
+    ion-icon {
+        font-size: 1rem;
+    }
+}
+
+.type-name {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #2c3e50;
+}
+
+.type-amount {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #2c3e50;
+    text-align: right;
+}
+
+.type-percentage {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: #7f8c8d;
+    margin-top: 0.2rem;
+    line-height: 1.2;
+}
+
+
+/* Monthly Trends */
+
+.trends-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+}
+
+.trend-item {
+    background: #f8f9fa;
+    border-radius: 0.6rem;
+    padding: 0.8rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    &:hover {
+        background: #e9ecef;
+        transform: translateY(-1px);
+    }
+}
+
+.trend-month {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #2c3e50;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+}
+
+.trend-amount {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #e74c3c;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+}
+
+.trend-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.breakdown-item {
+    font-size: 0.65rem;
+    font-weight: 300;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.4rem;
+    line-height: 1.2;
+    &.benefits {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498db;
+    }
+    &.operational {
+        background: rgba(231, 76, 60, 0.1);
+        color: #e74c3c;
+    }
+    &.events {
+        background: rgba(243, 156, 18, 0.1);
+        color: #f39c12;
+    }
+}
+
+
+/* Financial Health Details */
+
+.health-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.health-item {
+    background: #f8f9fa;
+    border-radius: 0.6rem;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    &:hover {
+        background: #e9ecef;
+        transform: translateX(2px);
+    }
+}
+
+.health-metric {
+    .metric-value {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: #2c3e50;
+        margin-bottom: 0.2rem;
+        line-height: 1.2;
+    }
+    .metric-label {
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: #7f8c8d;
+        line-height: 1.2;
+    }
+}
+
+
+/* Loading State */
+
+.loading-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    .loading-spinner {
+        width: 2rem;
+        height: 2rem;
+        border: 2px solid transparent;
+        border-top: 2px solid #F54927;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 0.8rem;
+    }
+    p {
+        color: #7f8c8d;
+        font-size: 0.8rem;
+        font-weight: 300;
+        line-height: 1.3;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Ratio Badge */
+
+.ratio-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.6rem;
+    font-size: 0.6rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+    line-height: 1.2;
+    &.healthy {
+        background: #d4edda;
+        color: #155724;
+    }
+    &.warning {
+        background: #fff3cd;
+        color: #856404;
+    }
+    &.critical {
+        background: #f8d7da;
+        color: #721c24;
+    }
+}
+
+
+/* Tablet Responsive */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .dashboard-content {
+        padding: 1.2rem;
+    }
+    .health-section,
+    .summary-section,
+    .insights-section {
+        margin: 1.2rem;
+    }
+    .health-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .trends-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+    .health-card,
+    .summary-card {
+        padding: 1.2rem;
+    }
+    .insight-card {
+        padding: 1.2rem;
+    }
+    .health-content h3,
+    .summary-content h3 {
+        font-size: 1.2rem;
+    }
+    .insight-title {
+        font-size: 1.1rem;
+    }
+}
+
+
+/* Desktop Responsive */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .dashboard-content {
+        padding: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .health-section,
+    .summary-section,
+    .insights-section {
+        margin: 1.5rem;
+    }
+    .health-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+    }
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+    .trends-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .health-card,
+    .summary-card {
+        padding: 1.5rem;
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+    }
+    .insight-card {
+        padding: 1.5rem;
+    }
+    .health-content h3,
+    .summary-content h3 {
+        font-size: 1.3rem;
+    }
+    .insight-title {
+        font-size: 1.2rem;
+    }
+    .type-item:hover {
+        transform: translateX(4px);
+    }
+    .trend-item:hover {
+        transform: translateY(-2px);
+    }
+}
+
+
+/* Large Desktop Responsive */
+
+@media (min-width: 1025px) {
+    .dashboard-content {
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    .health-section,
+    .summary-section,
+    .insights-section {
+        margin: 2rem;
+    }
+    .health-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+    .trends-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+    }
+    .health-card,
+    .summary-card {
+        padding: 1.5rem;
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+    }
+    .insight-card {
+        padding: 1.5rem;
+    }
+    .health-content h3,
+    .summary-content h3 {
+        font-size: 1.4rem;
+    }
+    .insight-title {
+        font-size: 1.3rem;
+    }
+    .type-item:hover {
+        transform: translateX(4px);
+    }
+    .trend-item:hover {
+        transform: translateY(-2px);
+    }
+}
+
+
+/* Mobile Optimizations */
+
+@media (max-width: 380px) {
+    .dashboard-content {
+        padding: 0.8rem;
+    }
+    .health-section,
+    .summary-section,
+    .insights-section {
+        margin: 0.8rem;
+    }
+    .health-card,
+    .summary-card {
+        padding: 0.8rem;
+        gap: 0.6rem;
+    }
+    .insight-card {
+        padding: 0.8rem;
+    }
+    .health-icon,
+    .summary-icon {
+        width: 2.2rem;
+        height: 2.2rem;
+        ion-icon {
+            font-size: 1rem;
+        }
+    }
+    .health-content h3,
+    .summary-content h3 {
+        font-size: 1rem;
+    }
+    .type-item {
+        padding: 0.6rem;
+        gap: 0.5rem;
+    }
+    .type-icon {
+        width: 1.8rem;
+        height: 1.8rem;
+        ion-icon {
+            font-size: 0.9rem;
+        }
+    }
+    .trend-item {
+        padding: 0.6rem;
+    }
+    .health-item {
+        padding: 0.8rem;
+    }
+}

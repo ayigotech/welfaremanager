@@ -1,0 +1,201 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/dashboard"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Events Insights</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="refreshData()">
+                <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+
+
+    <div class="context-note">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>Note: Transport levies and expenses apply only to funeral events</span>
+    </div>
+
+    <!-- Event Volume Summary -->
+    <div class="summary-section">
+        <div class="summary-grid">
+            <!-- Total Events -->
+            <div class="summary-card">
+                <div class="summary-icon total">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.total_events || 0 }}</h3>
+                    <p>Total {{ currentYear }} Events</p>
+                </div>
+            </div>
+
+            <!-- Events This Month -->
+            <div class="summary-card">
+                <div class="summary-icon current">
+                    <ion-icon name="today-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.current_month_events || 0 }}</h3>
+                    <p>Events This Month</p>
+                </div>
+            </div>
+
+            <!-- Levy Collection Rate -->
+
+            <div class="summary-card">
+                <div class="summary-icon levy">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.levy_collection_rate || 0 }}%</h3>
+                    <p>Levy Collection Rate</p>
+                    <!-- Explanatory Badge -->
+                    <span class="ratio-badge" [class]="getLevyCollectionStatus()">
+            {{ getLevyCollectionText() }}
+        </span>
+                </div>
+            </div>
+
+            <!-- Average Levy -->
+            <div class="summary-card">
+                <div class="summary-icon average">
+                    <ion-icon name="analytics-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.average_levy_amount || 0) }}</h3>
+                    <p>Average Levy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Insights Section -->
+    <div class="insights-section">
+        <!-- Event Type Distribution -->
+        <div class="insight-card">
+            <h3 class="insight-title">Event Type Distribution ({{ currentYear }})</h3>
+            <div class="type-breakdown">
+                <div *ngFor="let type of insights?.event_type_distribution" class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon" [class]="getEventTypeClass(type.event_type)">
+                            <ion-icon [name]="getEventTypeIcon(type.event_type)"></ion-icon>
+                        </div>
+                        <span class="type-name">{{ getEventTypeDisplay(type.event_type) }}</span>
+                    </div>
+                    <div class="type-stats">
+                        <span class="type-count">{{ type.count }} events</span>
+                        <span class="type-percentage">{{ getTypePercentage(type.event_type) }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Impact -->
+        <div class="insight-card">
+            <h3 class="insight-title">Financial Impact</h3>
+            <div class="financial-grid">
+                <div class="financial-item">
+                    <div class="financial-icon total">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <div class="financial-content">
+                        <span class="financial-amount">{{ formatCurrency(insights?.total_levy_collected || 0) }}</span>
+                        <span class="financial-label">Total Levy Collected</span>
+                    </div>
+                </div>
+
+                <!-- Events with Levy -->
+                <!-- <div class="financial-item">
+                        <div class="financial-icon efficiency">
+                            <ion-icon name="trending-up-outline"></ion-icon>
+                        </div>
+                        <div class="financial-content">
+                            <span class="financial-amount">{{ insights?.events_with_levy || 0 }}/{{ insights?.total_events || 0 }}</span>
+                            <span class="financial-label">Funeral Events with Levy</span>
+                        
+                            <span class="ratio-badge" [class]="getLevyCoverageStatus()">
+                                {{ getLevyCoverageText() }}
+                            </span>
+                        </div>
+                    </div> -->
+
+                <!-- Cost Recovery Rate -->
+                <div class="financial-item">
+                    <div class="financial-icon recovery">
+                        <ion-icon name="calculator-outline"></ion-icon>
+                    </div>
+                    <div class="financial-content">
+                        <span class="financial-amount">{{ insights?.cost_recovery_rate || 0 }}%</span>
+                        <span class="financial-label">Funeral Cost Recovery</span>
+                        <!-- Explanatory Badge -->
+                        <span class="ratio-badge" [class]="getCostRecoveryStatus()">
+            {{ getCostRecoveryText() }}
+        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends -->
+        <!-- <div class="insight-card">
+            <h3 class="insight-title">Monthly Event Trends (Last 6 Months)</h3>
+            <div class="trends-grid">
+                <div *ngFor="let month of insights?.monthly_trends" class="trend-item">
+                    <div class="trend-month">{{ month.month }}</div>
+                    <div class="trend-count">{{ month.total_events }} events</div>
+                    <div class="trend-levy">
+                        <span class="levy-collected">{{ formatCurrency(month.levy_collected) }}</span>
+                        <span class="levy-rate">{{ month.levy_collection_rate }}% collected</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Levy Collection Performance -->
+        <div class="insight-card">
+            <h3 class="insight-title">Levy Collection Performance</h3>
+            <div class="performance-grid">
+                <div class="performance-item">
+                    <div class="performance-metric">
+                        <span class="metric-value">{{ insights?.levy_collection_rate || 0 }}%</span>
+                        <span class="metric-label">Current Collection Rate</span>
+                    </div>
+                    <div class="performance-target">
+                        Target: {{ insights?.levy_collection_target || 0 }}%
+                    </div>
+                </div>
+
+                <div class="performance-item">
+                    <div class="performance-metric">
+                        <span class="metric-value">{{ formatCurrency(insights?.average_levy_amount || 0) }}</span>
+                        <span class="metric-label">Average Levy Amount</span>
+                    </div>
+                    <div class="performance-target">
+                        Per Event
+                    </div>
+                </div>
+
+                <div class="performance-item">
+                    <div class="performance-metric">
+                        <span class="metric-value">{{ insights?.levy_trend || 0 }}%</span>
+                        <span class="metric-label">Collection Trend</span>
+                    </div>
+                    <div class="performance-target">
+                        vs Previous Period
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading events insights...</p>
+    </div>
+</ion-content>

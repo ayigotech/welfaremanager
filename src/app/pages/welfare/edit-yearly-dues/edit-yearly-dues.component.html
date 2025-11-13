@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/yearly-dues"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Edit Yearly Dues</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="updateDues()" [disabled]="duesForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Update</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="form-container">
+        <form class="dues-form" [formGroup]="duesForm">
+            <!-- Year (readonly since it's part of unique constraint) -->
+            <div class="input-group readonly">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <input type="text" class="form-input" [value]="yearlyDues.year" readonly>
+            </div>
+            <div class="readonly-note">Year cannot be changed once set</div>
+
+            <!-- Monthly Amount -->
+            <div class="input-group amount-input-group">
+                <div class="input-icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <input type="number" class="form-input" placeholder="Monthly Amount" formControlName="monthly_amount" step="0.01" min="0.01" required>
+            </div>
+            <div class="error-message" *ngIf="duesForm.get('monthly_amount')?.invalid && duesForm.get('monthly_amount')?.touched">
+                Valid monthly amount is required (minimum ₵0.01)
+            </div>
+
+            <div class="info-box">
+                <p><strong>Summary:</strong></p>
+                <p>Year {{ yearlyDues.year }} - Monthly: {{ formatCurrency(duesForm.get('monthly_amount')?.value) }}</p>
+                <p>Annual Total: {{ formatCurrency((duesForm.get('monthly_amount')?.value || 0) * 12) }}</p>
+            </div>
+        </form>
+
+        <div class="form-actions">
+            <button class="secondary-btn" (click)="goBack()">Cancel</button>
+            <button class="primary-btn" (click)="updateDues()" [disabled]="duesForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Update Yearly Dues</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </button>
+        </div>
+    </div>
+</ion-content>

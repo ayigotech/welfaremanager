@@ -1,0 +1,431 @@
+.login-content {
+    --background: white;
+}
+
+ion-toolbar {
+    --background: transparent;
+    --color: rgb(16, 14, 14);
+}
+
+
+/* Base responsive container */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+
+/* Responsive logo */
+
+.logo-container {
+    margin-bottom: 1.5rem;
+}
+
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(245, 73, 39, 0.3);
+    animation: bounce 2s ease-in-out infinite;
+    margin: 0 auto;
+}
+
+.logo-icon {
+    font-size: 2.2rem;
+    color: rgb(154, 59, 59);
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-6px) scale(1.03);
+    }
+}
+
+
+/* Responsive welcome text */
+
+.welcome-text {
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 500px;
+    h1 {
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: rgb(17, 18, 18);
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #352d2d 0%, #c87474 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.3;
+    }
+    p {
+        color: rgba(9, 9, 9, 0.8);
+        font-size: 0.9rem;
+        font-weight: 300;
+        line-height: 1.4;
+        margin: 0;
+    }
+}
+
+
+/* Responsive form */
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    align-items: center;
+    padding: 0 0.875rem;
+    border: 1px solid #c87474;
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    border-color: #F54927;
+    box-shadow: 0 6px 20px rgba(245, 73, 39, 0.15);
+    transform: translateY(-1px);
+}
+
+.input-icon {
+    margin-right: 0.625rem;
+    ion-icon {
+        font-size: 1.1rem;
+        color: rgba(32, 32, 32, 0.7);
+        padding-right: 0.5rem;
+        border-right: 1px solid rosybrown;
+    }
+}
+
+.form-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.875rem 0;
+    color: rgb(21, 22, 21);
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    &::placeholder {
+        color: rgba(16, 16, 16, 0.6);
+        font-weight: 300;
+    }
+}
+
+
+/* Responsive button */
+
+.login-button {
+    width: 100%;
+    background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 0.875rem;
+    color: rgb(21, 22, 21);
+    font-size: 0.95rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 15px rgba(245, 73, 39, 0.25);
+    position: relative;
+    overflow: hidden;
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 73, 39, 0.35);
+    }
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+
+/* Loading spinner */
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Footer */
+
+.login-footer {
+    margin-top: 2rem;
+    text-align: center;
+    p {
+        color: rgba(79, 44, 18, 0.482);
+        font-size: 0.8rem;
+        font-weight: 300;
+    }
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin-top: -0.8rem;
+    margin-bottom: 0.8rem;
+    text-align: left;
+    padding-left: 0.5rem;
+}
+
+.signup-section {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.signup-text {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.signup-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: #F54927;
+    border: 2px solid #F54927;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    &:hover {
+        background: #F54927;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(245, 73, 39, 0.3);
+    }
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(245, 73, 39, 0.2);
+    }
+    ion-icon {
+        font-size: 1rem;
+    }
+}
+
+
+/* Tablet responsive */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .login-container {
+        padding: 1.5rem;
+    }
+    .logo-circle {
+        width: 90px;
+        height: 90px;
+    }
+    .logo-icon {
+        font-size: 2.5rem;
+    }
+    .welcome-text h1 {
+        font-size: 1.8rem;
+    }
+    .welcome-text p {
+        font-size: 1rem;
+    }
+    .form-input {
+        font-size: 1rem;
+    }
+    .login-button {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+}
+
+
+/* Desktop responsive */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .login-container {
+        padding: 2rem;
+    }
+    .logo-circle {
+        width: 100px;
+        height: 100px;
+    }
+    .logo-icon {
+        font-size: 2.8rem;
+    }
+    .welcome-text h1 {
+        font-size: 2rem;
+    }
+    .welcome-text p {
+        font-size: 1.05rem;
+    }
+    .login-form {
+        max-width: 420px;
+    }
+    .input-group {
+        margin-bottom: 1.5rem;
+        padding: 0 1rem;
+    }
+    .form-input {
+        padding: 1rem 0;
+        font-size: 1.05rem;
+    }
+    .login-button {
+        padding: 1rem;
+        font-size: 1.05rem;
+    }
+}
+
+
+/* Large desktop responsive */
+
+@media (min-width: 1025px) {
+    .login-container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .logo-circle {
+        width: 110px;
+        height: 110px;
+    }
+    .logo-icon {
+        font-size: 3rem;
+    }
+    .welcome-text h1 {
+        font-size: 2.2rem;
+    }
+    .welcome-text p {
+        font-size: 1.1rem;
+    }
+    .login-form {
+        max-width: 450px;
+    }
+    .input-group {
+        margin-bottom: 1.5rem;
+        padding: 0 1rem;
+        &:hover {
+            border-color: #F54927;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(245, 73, 39, 0.15);
+        }
+    }
+    .form-input {
+        padding: 1rem 0;
+        font-size: 1.05rem;
+    }
+    .login-button {
+        padding: 1rem;
+        font-size: 1.05rem;
+    }
+    .signup-link {
+        padding: 0.875rem 1.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+
+/* Mobile responsive adjustments */
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1rem;
+        min-height: calc(100vh - 100px);
+    }
+    .logo-container {
+        margin-bottom: 1.2rem;
+    }
+    .logo-circle {
+        width: 70px;
+        height: 70px;
+    }
+    .logo-icon {
+        font-size: 1.8rem;
+    }
+    .welcome-text {
+        margin-bottom: 1.5rem;
+        h1 {
+            font-size: 1.4rem;
+        }
+        p {
+            font-size: 0.85rem;
+        }
+    }
+    .input-group {
+        margin-bottom: 1rem;
+        padding: 0 0.75rem;
+        border-radius: 8px;
+    }
+    .form-input {
+        padding: 0.75rem 0;
+        font-size: 0.85rem;
+    }
+    .input-icon ion-icon {
+        font-size: 1rem;
+        padding-right: 0.4rem;
+    }
+    .login-button {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+    .signup-section {
+        margin-top: 1.5rem;
+        padding-top: 1.2rem;
+    }
+    .signup-link {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.75rem;
+    }
+    .login-footer p {
+        font-size: 0.75rem;
+    }
+    .error-message {
+        font-size: 0.75rem;
+    }
+}

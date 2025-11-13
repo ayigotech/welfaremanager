@@ -1,0 +1,182 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/dashboard"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Receipts Insights</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="refreshData()">
+                <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+    <!-- Summary Cards -->
+    <div class="summary-section">
+        <div class="summary-grid">
+            <!-- Total Yearly Receipts -->
+            <div class="summary-card">
+                <div class="summary-icon total">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.total_year_receipts || 0) }}</h3>
+                    <p>Total {{ currentYear }} Receipts</p>
+                </div>
+            </div>
+
+            <!-- Current Month -->
+            <div class="summary-card">
+                <div class="summary-icon current">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.current_month_total || 0) }}</h3>
+                    <p>Current Month</p>
+                    <span class="change-indicator" [class.positive]="isPositiveGrowth()" [class.negative]="!isPositiveGrowth()">
+                        {{ getGrowthSymbol() }}{{ getMonthlyGrowth() }}%
+                    </span>
+                </div>
+            </div>
+
+            <!-- Average Receipt -->
+            <div class="summary-card">
+                <div class="summary-icon average">
+                    <ion-icon name="analytics-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ formatCurrency(insights?.average_receipt_amount || 0) }}</h3>
+                    <p>Average Receipt</p>
+                </div>
+            </div>
+
+            <!-- Total Receipts Count -->
+            <div class="summary-card">
+                <div class="summary-icon count">
+                    <ion-icon name="receipt-outline"></ion-icon>
+                </div>
+                <div class="summary-content">
+                    <h3>{{ insights?.total_receipts_count || 0 }}</h3>
+                    <p>Total Receipts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Insights Section -->
+    <div class="insights-section">
+        <!-- Receipt Type Breakdown -->
+        <div class="insight-card">
+            <h3 class="insight-title">Receipt Type Breakdown ({{ currentYear }})</h3>
+            <div class="type-breakdown">
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon monthly-dues">
+                            <ion-icon name="calendar-number-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Monthly Dues</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.monthly_dues_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('monthly_dues') }}%</span>
+                    </div>
+                </div>
+
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon transport-levy">
+                            <ion-icon name="bus-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Transport Levy</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.transport_levy_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('transport_levy') }}%</span>
+                    </div>
+                </div>
+
+                <div class="type-item">
+                    <div class="type-header">
+                        <div class="type-icon other">
+                            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+                        </div>
+                        <span class="type-name">Other</span>
+                    </div>
+                    <div class="type-amount">
+                        {{ formatCurrency(insights?.other_types_total || 0) }}
+                        <span class="type-percentage">{{ getTypePercentage('other') }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends -->
+        <!-- <div class="insight-card">
+            <h3 class="insight-title">Monthly Trends (Last 6 Months)</h3>
+            <div class="trends-grid">
+                <div *ngFor="let month of insights?.monthly_trends" class="trend-item">
+                    <div class="trend-month">{{ month.month }}</div>
+                    <div class="trend-amount">{{ formatCurrency(month.total) }}</div>
+                    <div class="trend-breakdown">
+                        <span class="breakdown-item dues">{{ formatCurrency(month.monthly_dues) }}</span>
+                        <span class="breakdown-item transport">{{ formatCurrency(month.transport_levy) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Collection Performance -->
+        <div class="insight-card">
+            <h3 class="insight-title">Collection Performance</h3>
+            <div class="performance-grid">
+                <div class="performance-item">
+                    <div class="performance-metric">
+                        <span class="metric-value">{{ insights?.monthly_dues_compliance || 0 }}%</span>
+                        <span class="metric-label">Monthly Dues Compliance</span>
+                    </div>
+                    <div class="performance-target">
+                        Target: {{ insights?.monthly_dues_target || 0 }}%
+                    </div>
+                </div>
+
+                <div class="performance-item">
+                    <div class="performance-metric">
+                        <span class="metric-value">{{ insights?.transport_levy_efficiency || 0 }}%</span>
+                        <span class="metric-label">Transport Levy Efficiency</span>
+                    </div>
+                    <div class="performance-target">
+                        Expected: {{ insights?.transport_levy_expected || 0 }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Contributors -->
+        <div class="insight-card">
+            <h3 class="insight-title">Top Contributors ({{ currentYear }})</h3>
+            <div class="contributors-list">
+                <div *ngFor="let contributor of insights?.top_contributors; let i = index" class="contributor-item">
+                    <div class="contributor-rank">{{ i + 1 }}</div>
+                    <div class="contributor-details">
+                        <span class="contributor-name">{{ contributor.name }}</span>
+                        <div class="contributor-breakdown">
+                            <span class="breakdown dues">Dues: {{ formatCurrency(contributor.monthly_dues) }}</span>
+                            <span class="breakdown transport">Transport: {{ formatCurrency(contributor.transport_levy) }}</span>
+                        </div>
+                    </div>
+                    <div class="contributor-total">
+                        {{ formatCurrency(contributor.total) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading receipts insights...</p>
+    </div>
+</ion-content>

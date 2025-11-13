@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare/receipts"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Add New Receipt</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="saveReceipt()" [disabled]="receiptForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Save</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="form-container">
+        <form class="receipt-form" [formGroup]="receiptForm">
+            <!-- Member Selection -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="member" required>
+                    <option value="">Select Member</option>
+                    <option *ngFor="let member of members" [value]="member.id">
+                        {{ member.full_name }}
+                    </option>
+                </select>
+            </div>
+
+
+
+            <div class="error-message" *ngIf="receiptForm.get('member')?.invalid && receiptForm.get('member')?.touched">
+                Member selection is required
+            </div>
+
+            <!-- Receipt Type -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="card-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="receipt_type" required>
+                    <option value="">Select Type</option>
+                    <option value="monthly_dues">Monthly Dues</option>
+                    <option value="transport_levy">Transport Levy</option>
+                    <option value="donation">Donation</option>
+                    <option value="passbook">Passbook</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="receiptForm.get('receipt_type')?.invalid && receiptForm.get('receipt_type')?.touched">
+                Receipt type is required
+            </div>
+
+            <!-- Amount -->
+            <div class="input-group amount-input-group">
+                <div class="input-icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <input type="number" class="form-input" placeholder="Amount" formControlName="amount" step="0.01" min="0.01" required>
+            </div>
+            <div class="error-message" *ngIf="receiptForm.get('amount')?.invalid && receiptForm.get('amount')?.touched">
+                Valid amount is required (minimum ₵0.01)
+            </div>
+
+            <!-- Date -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <input type="date" class="form-input" formControlName="date" required>
+            </div>
+            <div class="error-message" *ngIf="receiptForm.get('date')?.invalid && receiptForm.get('date')?.touched">
+                Date is required
+            </div>
+
+            <!-- Year -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <select class="form-input" formControlName="year" required>
+                    <option value="">Select Year</option>
+                    <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div class="error-message" *ngIf="receiptForm.get('year')?.invalid && receiptForm.get('year')?.touched">
+                Year is required
+            </div>
+
+            <!-- Details -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                </div>
+                <input class="form-input" placeholder="Details (optional)" formControlName="details">
+            </div>
+        </form>
+
+        <div class="form-actions">
+            <button class="secondary-btn" (click)="goBack()">Cancel</button>
+            <button class="primary-btn" (click)="saveReceipt()" [disabled]="receiptForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Save Receipt</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </button>
+        </div>
+    </div>
+</ion-content>

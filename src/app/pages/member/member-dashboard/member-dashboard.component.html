@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Member Dashboard</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+    <div class="welcome-section">
+        <div class="logo-circle">
+            <ion-icon name="person-circle-outline" class="logo-icon"></ion-icon>
+        </div>
+        <h1 class="welcome-title">Welcome, {{user?.name}}</h1>
+        <p class="welcome-subtitle">View your welfare activities</p>
+    </div>
+
+    <div class="actions-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+            <!-- My Dues Card -->
+            <ion-card class="action-card" (click)="navigateToDues()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="wallet-outline"></ion-icon>
+                    </div>
+                    <h3>My Dues</h3>
+                    <p>View manage your dues contributions</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Transport Levies Card -->
+            <ion-card class="action-card" (click)="navigateToTransport()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="bus-outline"></ion-icon>
+                    </div>
+                    <h3>Transport Levies</h3>
+                    <p>View transportation contributions</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Upcoming Events Card -->
+            <ion-card class="action-card" (click)="navigateToEvents()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                    </div>
+                    <h3>Upcoming Events</h3>
+                    <p>View events and activities</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Notifications Card -->
+            <ion-card class="action-card" (click)="navigateToNotifications()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                    </div>
+                    <h3>Notifications</h3>
+                    <p>See Alerts and updates</p>
+                </ion-card-content>
+            </ion-card>
+        </div>
+    </div>
+</ion-content>

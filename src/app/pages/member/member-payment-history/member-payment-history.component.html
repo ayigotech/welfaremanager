@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/member"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Payment History</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="payment-history-content">
+    <!-- Search and Filters -->
+    <div class="filters-section">
+        <div class="search-box">
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" placeholder="Search receipts..." [value]="searchTerm" (input)="onSearchChange($event)" class="search-input">
+        </div>
+
+        <div class="filter-buttons">
+            <button *ngFor="let filter of filters" (click)="onFilterChange(filter.value)" [class.active]="currentFilter === filter.value" class="filter-btn">
+                {{ filter.label }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+        <ion-spinner></ion-spinner>
+        <p>Loading payment history...</p>
+    </div>
+
+    <!-- Payment List -->
+    <div *ngIf="!loading" class="payments-section">
+        <div class="section-header">
+            <h2 class="section-title">Payment Records</h2>
+            <span class="record-count">{{filteredPayments.length}} records</span>
+        </div>
+
+        <!-- No Results -->
+        <div *ngIf="filteredPayments.length === 0" class="empty-state">
+            <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
+            <h3>No Payments Found</h3>
+            <p>No payment records match your current search criteria.</p>
+        </div>
+
+        <!-- Payment List -->
+        <div *ngIf="filteredPayments.length > 0" class="payments-list">
+            <div class="payment-card" *ngFor="let payment of filteredPayments">
+                <div class="payment-header">
+                    <div class="payment-type" [class]="getReceiptTypeClass(payment.receipt_type)">
+                        {{ getReceiptTypeDisplay(payment.receipt_type) }}
+                    </div>
+                    <div class="payment-amount">{{ formatCurrency(payment.amount) }}</div>
+                </div>
+
+                <div class="payment-details">
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span class="value">{{ formatDate(payment.date) }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Year:</span>
+                        <span class="value">{{ payment.year }}</span>
+                    </div>
+                    <div class="detail-row" *ngIf="payment.details">
+                        <span class="label">Details:</span>
+                        <span class="value">{{ payment.details }}</span>
+                    </div>
+                </div>
+
+                <div class="payment-receipt">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    <span>Receipt: {{ payment.receipt_number }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

@@ -1,0 +1,114 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Welfare Admin Dashboard</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+    <div class="welcome-section">
+        <div class="logo-circle">
+            <ion-icon name="people-circle-outline" class="logo-icon"></ion-icon>
+        </div>
+        <h1 class="welcome-title">Welcome, {{user?.name}}</h1>
+        <p class="welcome-subtitle">Manage church welfare activities</p>
+    </div>
+
+    <div class="actions-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+            <!-- Manage Members Card -->
+            <ion-card class="action-card" (click)="navigateToMembers()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <h3>Manage Members</h3>
+                    <p>View and manage church members</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Manage Receipts Card -->
+            <ion-card class="action-card" (click)="navigateToReceipts()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                    </div>
+                    <h3>Manage Receipts</h3>
+                    <p>Handle income and receipts</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Manage Payments Card -->
+            <ion-card class="action-card" (click)="navigateToPayments()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <h3>Manage Payments</h3>
+                    <p>Process welfare payments</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Manage Events Card -->
+            <ion-card class="action-card" (click)="navigateToEvents()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                    </div>
+                    <h3>Manage Events</h3>
+                    <p>Organize church events</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Manage Yearly Dues Card -->
+            <ion-card class="action-card" (click)="navigateToYearlyDues()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                    <h3>Yearly Dues</h3>
+                    <p>Manage annual contributions</p>
+                </ion-card-content>
+            </ion-card>
+
+
+
+            <!-- Manage church/welfare contact -->
+            <ion-card class="action-card" (click)="navigateToUpdateContact()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="call-outline"></ion-icon>
+                    </div>
+                    <h3>Contact</h3>
+                    <p>Update Welfare Contact</p>
+                </ion-card-content>
+            </ion-card>
+
+
+
+            <ion-card class="action-card" (click)="navigateToManageRole()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <h3>User Role</h3>
+                    <p>Manage User Role</p>
+                </ion-card-content>
+            </ion-card>
+
+            <!-- Send Notifications Card -->
+            <!-- <ion-card class="action-card" (click)="navigateToNotifications()">
+                <ion-card-content>
+                    <div class="action-icon">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                    </div>
+                    <h3>Send Notifications</h3>
+                    <p>Broadcast alerts and updates</p>
+                </ion-card-content>
+            </ion-card> -->
+        </div>
+    </div>
+</ion-content>

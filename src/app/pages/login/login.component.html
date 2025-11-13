@@ -1,0 +1,59 @@
+<ion-content class="login-content">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <!-- <ion-header class="ion-no-border">
+        <ion-toolbar>
+            <ion-title>Welcome</ion-title>
+        </ion-toolbar>
+    </ion-header> -->
+
+    <div class="login-container ion-padding">
+        <!-- Logo with Animation -->
+        <div class="logo-container">
+            <div class="logo-circle">
+                <ion-icon name="heart" class="logo-icon"></ion-icon>
+            </div>
+        </div>
+
+        <!-- Welcome Text -->
+        <div class="welcome-text">
+            <h1>Welcome Back</h1>
+            <p>Sign in</p>
+        </div>
+
+        <!-- Login Form -->
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+            <!-- Phone Input -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="call-outline"></ion-icon>
+                </div>
+                <input type="tel" class="form-input" placeholder="Enter your phone number" formControlName="phoneNumber" required>
+            </div>
+            <div class="error-message" *ngIf="loginForm.get('phoneNumber')?.invalid && loginForm.get('phoneNumber')?.touched">
+                Valid phone number is required
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="login-button" [disabled]="loginForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Sign In</span>
+                <div class="spinner" *ngIf="isLoading"></div>
+            </button>
+        </form>
+
+        <div class="signup-section">
+            <p class="signup-text">Don't have an account?</p>
+            <a class="signup-link" (click)="onSignup()">
+                <ion-icon name="person-add"></ion-icon>
+                Create Church Account
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <p>Welfare Manager · Powered by ayigotech</p>
+        </div>
+    </div>
+</ion-content>

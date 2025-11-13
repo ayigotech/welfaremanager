@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/welfare"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Manage Contact</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="manage-contact-content">
+    <div class="form-container">
+        <!-- Current Info Card -->
+        <div class="info-card" *ngIf="churchData">
+            <h3 class="info-title">Current Church Information</h3>
+            <div class="info-item">
+                <span class="label">Church Name:</span>
+                <span class="value">{{ churchData.name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Welfare Name:</span>
+                <span class="value">{{ churchData.welfare_name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Location:</span>
+                <span class="value">{{ churchData.location }}</span>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form [formGroup]="contactForm" class="contact-form">
+            <!-- Email -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="mail-outline"></ion-icon>
+                </div>
+                <input type="email" class="form-input" placeholder="Church Email" formControlName="email" required>
+            </div>
+            <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                Valid email is required
+            </div>
+
+            <!-- Welfare Mobile Money -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="phone-portrait-outline"></ion-icon>
+                </div>
+                <input type="tel" class="form-input" placeholder="Welfare Mobile Money (e.g., 0551234567)" formControlName="welfare_momo" required>
+            </div>
+            <div class="error-message" *ngIf="contactForm.get('welfare_momo')?.invalid && contactForm.get('welfare_momo')?.touched">
+                Valid 10-digit mobile money number is required
+            </div>
+
+            <!-- Church Mobile Money (Optional) -->
+            <div class="input-group">
+                <div class="input-icon">
+                    <ion-icon name="business-outline"></ion-icon>
+                </div>
+                <input type="tel" class="form-input" placeholder="Church Mobile Money (Optional)" formControlName="church_momo">
+            </div>
+            <div class="error-message" *ngIf="contactForm.get('church_momo')?.invalid && contactForm.get('church_momo')?.touched">
+                Please enter a valid 10-digit mobile money number
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="button" class="btn btn-primary" (click)="updateContact()" [disabled]="loading || contactForm.invalid">
+                    <span *ngIf="!loading">Update Contact</span>
+                    <span *ngIf="loading">Updating...</span>
+                </button>
+
+                <button type="button" class="btn btn-outline" (click)="goBack()" [disabled]="loading">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+</ion-content>

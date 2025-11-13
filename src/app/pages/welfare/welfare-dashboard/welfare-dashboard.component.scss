@@ -1,0 +1,440 @@
+// Reusing the same CSS as member dashboard
+.dashboard-content {
+    --background: #ffffff;
+    padding: 20px;
+    // Tablet
+    @media (min-width: 768px) {
+        padding: 30px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        padding: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    // Large screens
+    @media (min-width: 1440px) {
+        max-width: 1400px;
+        padding: 50px;
+    }
+}
+
+// Global font weight setting
+* {
+    font-weight: 200 !important;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 20px;
+    // Tablet
+    @media (min-width: 768px) {
+        margin-bottom: 40px;
+        padding-top: 30px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        margin-bottom: 50px;
+        padding-top: 40px;
+    }
+}
+
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(245, 73, 39, 0.3);
+    margin: 0 auto 15px;
+    transition: all 0.3s ease;
+    // Tablet
+    @media (min-width: 768px) {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 25px;
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(245, 73, 39, 0.4);
+        }
+    }
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    color: white;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 3rem;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 3.5rem;
+    }
+}
+
+.welcome-title {
+    font-size: 24px;
+    color: #2c3e50;
+    margin: 0 0 5px 0;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    // Large screens
+    @media (min-width: 1440px) {
+        font-size: 36px;
+    }
+}
+
+.welcome-subtitle {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 0;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 16px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 18px;
+    }
+}
+
+.actions-section {
+    margin-bottom: 30px;
+    // Tablet
+    @media (min-width: 768px) {
+        margin-bottom: 40px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        margin-bottom: 50px;
+    }
+}
+
+.section-title {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    // Tablet
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+    // Large screens
+    @media (min-width: 1440px) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+}
+
+.action-card {
+    margin: 0;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin: 10px 20px 10px 20px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    // Tablet
+    @media (min-width: 768px) {
+        border-radius: 20px;
+        margin: 0;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        border-radius: 24px;
+        &:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(245, 73, 39, 0.2);
+            border-color: #F54927;
+        }
+    }
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(245, 73, 39, 0.15);
+        border-color: #F54927;
+    }
+    &:active {
+        transform: translateY(-2px);
+    }
+}
+
+.action-card ion-card-content {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    border: 2px solid #e0e0e0;
+    border-radius: 14px;
+    // Tablet
+    @media (min-width: 768px) {
+        padding: 24px;
+        border-radius: 18px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        padding: 28px;
+        border-radius: 22px;
+    }
+}
+
+.action-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    box-shadow: 0 4px 12px rgba(245, 73, 39, 0.3);
+    transition: all 0.3s ease;
+    // Tablet
+    @media (min-width: 768px) {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 18px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+        .action-card:hover & {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(245, 73, 39, 0.4);
+        }
+    }
+}
+
+.action-icon ion-icon {
+    font-size: 1.8rem;
+    color: white;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 2rem;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 2.2rem;
+    }
+}
+
+.action-card h3 {
+    font-size: 16px;
+    color: #2c3e50;
+    margin: 0 0 8px 0;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+}
+
+.action-card p {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin: 0;
+    line-height: 1.4;
+    // Tablet
+    @media (min-width: 768px) {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    // Desktop
+    @media (min-width: 1024px) {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+}
+
+// Stats Section (Additional enhancement)
+.stats-section {
+    margin: 40px 0;
+    @media (min-width: 768px) {
+        margin: 50px 0;
+    }
+    @media (min-width: 1024px) {
+        margin: 60px 0;
+    }
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    @media (min-width: 1024px) {
+        gap: 24px;
+    }
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    @media (min-width: 768px) {
+        padding: 24px;
+        border-radius: 20px;
+    }
+    @media (min-width: 1024px) {
+        padding: 28px;
+        &:hover {
+            transform: translateY(-4px);
+            border-color: #F54927;
+            box-shadow: 0 8px 25px rgba(245, 73, 39, 0.15);
+        }
+    }
+}
+
+.stat-number {
+    font-size: 24px;
+    color: #F54927;
+    margin-bottom: 8px;
+    @media (min-width: 768px) {
+        font-size: 28px;
+    }
+    @media (min-width: 1024px) {
+        font-size: 32px;
+    }
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #7f8c8d;
+    @media (min-width: 768px) {
+        font-size: 14px;
+    }
+}
+
+// Enhanced mobile responsive
+@media (max-width: 480px) {
+    .dashboard-content {
+        padding: 16px;
+    }
+    .actions-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .action-card {
+        margin: 10px 0;
+    }
+    .action-card ion-card-content {
+        padding: 16px;
+    }
+    .action-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 12px;
+    }
+    .action-icon ion-icon {
+        font-size: 1.5rem;
+    }
+    .logo-circle {
+        width: 70px;
+        height: 70px;
+    }
+    .logo-icon {
+        font-size: 2rem;
+    }
+    .welcome-title {
+        font-size: 22px;
+    }
+    .welcome-subtitle {
+        font-size: 13px;
+    }
+    .section-title {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+}
+
+// Large screen optimizations
+@media (min-width: 1920px) {
+    .dashboard-content {
+        max-width: 1600px;
+        padding: 60px;
+    }
+    .actions-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+    }
+    .action-card ion-card-content {
+        padding: 32px;
+    }
+    .action-icon {
+        width: 90px;
+        height: 90px;
+    }
+    .action-icon ion-icon {
+        font-size: 2.5rem;
+    }
+    .logo-circle {
+        width: 140px;
+        height: 140px;
+    }
+    .logo-icon {
+        font-size: 4rem;
+    }
+}
+
+// Ultra-wide screens
+@media (min-width: 2560px) {
+    .dashboard-content {
+        max-width: 2000px;
+    }
+    .actions-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 40px;
+    }
+}

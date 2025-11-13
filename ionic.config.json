@@ -1,7 +1,8 @@
 {
-  "name": "welfare-manager",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
+    "name": "welfare-manager",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular-standalone"
+
 }

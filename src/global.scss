@@ -9,16 +9,137 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+
 /* Core CSS required for Ionic components to work properly */
+
+
+/* Basic global styles */
+
+:root {
+    /* Base font sizes for different screen sizes - decreased by ~1px */
+    --font-size-xs: 11px;
+    --font-size-sm: 13px;
+    --font-size-base: 15px;
+    --font-size-lg: 17px;
+    --font-size-xl: 19px;
+    --font-size-2xl: 23px;
+    /* Mobile first - smaller fonts */
+    font-size: 13px;
+    --font-weight: 200;
+    font-weight: 200;
+}
+
+
+/* Universal font size scaling */
+
+* {
+    font-size: inherit;
+}
+
+
+/* Mobile */
+
+@media (max-width: 480px) {
+     :root {
+        font-size: 13px;
+        /* Was 14px */
+    }
+}
+
+
+/* Tablet */
+
+@media (min-width: 481px) and (max-width: 768px) {
+     :root {
+        font-size: 14px;
+        /* Was 15px */
+    }
+}
+
+
+/* Desktop */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+     :root {
+        font-size: 15px;
+        /* Was 16px */
+    }
+}
+
+
+/* Large Desktop */
+
+@media (min-width: 1025px) {
+     :root {
+        font-size: 16px;
+        /* Was 17px */
+    }
+}
+
+@import '@ionic/angular/css/palettes/dark.system.css';
+* {
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+ion-modal {
+    z-index: 99999 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+ion-app {
+    height: 100%;
+}
+
+ion-content {
+    --padding-bottom: env(safe-area-inset-bottom);
+    --padding-top: env(safe-area-inset-top);
+}
+
+ion-refresher,
+ion-refresher-content,
+ion-content,
+ion-card,
+ion-item,
+ion-item-group,
+ion-segment {
+    --background: #f8f9fa;
+}
+
+ion-item-divider {
+    --background: #f8f9fa;
+}
+
+ion-toolbar {
+    --background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+}
+
+ion-header {
+    --background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+    --padding: 20px;
+}
+
+
+/* Fix for form labels globally */
+
+ion-label,
+ion-card-title {
+    color: rgb(59, 55, 47)
+}
+
 @import "@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
+
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
+
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
@@ -32,6 +153,8 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
+
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
+
+
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';

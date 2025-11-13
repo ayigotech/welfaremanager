@@ -1,0 +1,96 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/member"></ion-back-button>
+        </ion-buttons>
+        <ion-title>My Dues</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dues-content">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <!-- Total Dues Expected -->
+        <div class="summary-card">
+            <div class="card-icon total">
+                <ion-icon name="wallet-outline"></ion-icon>
+            </div>
+            <div class="card-content">
+                <h3>Total Expected</h3>
+                <p class="amount">₵{{totalDuesExpected | number}}</p>
+                <p class="subtext">All time dues</p>
+            </div>
+        </div>
+
+        <!-- Total Paid -->
+        <div class="summary-card">
+            <div class="card-icon paid">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+            </div>
+            <div class="card-content">
+                <h3>Total Paid</h3>
+                <p class="amount">₵{{totalPaid | number}}</p>
+                <p class="subtext">All time payments</p>
+            </div>
+        </div>
+
+        <!-- Overall Progress -->
+        <div class="summary-card progress-card">
+            <div class="card-content">
+                <h3>Overall Progress</h3>
+                <p class="percentage">{{overallProgress}}%</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="overallProgress"></div>
+                </div>
+                <p class="subtext">Completion rate</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Current Year Progress -->
+    <div class="current-year-section">
+        <h2 class="section-title">Current Year ({{currentYear}})</h2>
+        <div class="progress-card-large">
+            <div class="progress-header">
+                <span class="progress-label">Annual Dues Progress</span>
+                <span class="progress-value">{{currentYearProgress}}%</span>
+            </div>
+            <div class="progress-bar large">
+                <div class="progress-fill" [style.width.%]="currentYearProgress"></div>
+            </div>
+            <div class="progress-details">
+                <div class="detail-item">
+                    <span class="label">Paid:</span>
+                    <span class="value">₵{{currentYearPaid | number}}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Expected:</span>
+                    <span class="value">₵{{currentYearExpected | number}}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label text-warning-emphasis">Remaining:</span>
+                    <span class="value  text-danger">₵{{currentYearExpected - currentYearPaid | number}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment History -->
+    <div class="history-section">
+        <h2 class="section-title">Payment History</h2>
+        <div class="history-list">
+            <div class="history-item" *ngFor="let item of paymentHistory">
+                <div class="year-info">
+                    <h3 class="year">{{item.year}}</h3>
+                    <p class="date">Paid: ₵{{item.amountPaid | number}}</p>
+                </div>
+                <div class="progress-info">
+                    <div class="progress-bar small">
+                        <div class="progress-fill" [style.width.%]="item.progress"></div>
+                    </div>
+                    <span class="progress-percentage">{{item.progress}}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

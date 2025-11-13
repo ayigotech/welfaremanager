@@ -1,0 +1,468 @@
+.events-content {
+    --background: #f8f9fa;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.events-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #2c3e50;
+    margin: 0 0 1rem 0;
+    padding-left: 0.5rem;
+    margin: 1rem;
+    line-height: 1.3;
+}
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin: 1rem;
+}
+
+.event-card {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+    border-left: 3px solid #F54927;
+    &.past {
+        border-left-color: #95a5a6;
+        opacity: 0.8;
+    }
+}
+
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    min-width: 2.8rem;
+    &.past {
+        background: #95a5a6;
+    }
+    .date-day {
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 1;
+    }
+    .date-month {
+        font-size: 0.65rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        line-height: 1;
+        margin-top: 0.1rem;
+    }
+}
+
+.event-status {
+    font-size: 0.65rem;
+    font-weight: 300;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.6rem;
+    text-transform: uppercase;
+    line-height: 1.2;
+    &.upcoming {
+        background: rgba(245, 73, 39, 0.1);
+        color: #F54927;
+    }
+    &.past {
+        background: rgba(149, 165, 166, 0.1);
+        color: #95a5a6;
+    }
+}
+
+.event-content {
+    .event-title {
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: #2c3e50;
+        margin: 0 0 0.5rem 0;
+        line-height: 1.3;
+    }
+    .event-description {
+        font-size: 0.8rem;
+        font-weight: 300;
+        color: #7f8c8d;
+        margin: 0 0 0.8rem 0;
+        line-height: 1.3;
+    }
+}
+
+.event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    ion-icon {
+        font-size: 0.8rem;
+        color: #F54927;
+        min-width: 1rem;
+    }
+    span {
+        font-size: 0.7rem;
+        font-weight: 300;
+        color: #7f8c8d;
+        line-height: 1.2;
+    }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: white;
+    border-radius: 0.8rem;
+    margin: 1rem;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+    .empty-icon {
+        font-size: 2.2rem;
+        color: #bdc3c7;
+        margin-bottom: 1rem;
+    }
+    h3 {
+        font-size: 1rem;
+        font-weight: 300;
+        color: #2c3e50;
+        margin: 0 0 0.5rem 0;
+        line-height: 1.3;
+    }
+    p {
+        font-size: 0.8rem;
+        font-weight: 300;
+        color: #7f8c8d;
+        margin: 0;
+        line-height: 1.3;
+    }
+}
+
+
+/* Tablet Responsive */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .events-content {
+        padding: 1.2rem;
+    }
+    .events-section {
+        margin-bottom: 2.5rem;
+    }
+    .section-title {
+        font-size: 1.1rem;
+        margin: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .events-list {
+        gap: 1rem;
+        margin: 1.2rem;
+    }
+    .event-card {
+        padding: 1.2rem;
+        border-left-width: 4px;
+    }
+    .event-date {
+        min-width: 3.2rem;
+        padding: 0.6rem;
+        .date-day {
+            font-size: 1.1rem;
+        }
+        .date-month {
+            font-size: 0.7rem;
+        }
+    }
+    .event-status {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+    }
+    .event-content {
+        .event-title {
+            font-size: 1rem;
+        }
+        .event-description {
+            font-size: 0.85rem;
+        }
+    }
+    .meta-item {
+        ion-icon {
+            font-size: 0.85rem;
+        }
+        span {
+            font-size: 0.75rem;
+        }
+    }
+    .empty-state {
+        padding: 2.5rem 1.5rem;
+        margin: 1.2rem;
+        .empty-icon {
+            font-size: 2.5rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+        }
+        p {
+            font-size: 0.85rem;
+        }
+    }
+}
+
+
+/* Desktop Responsive */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .events-content {
+        padding: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .events-section {
+        margin-bottom: 3rem;
+    }
+    .section-title {
+        font-size: 1.2rem;
+        margin: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .events-list {
+        gap: 1.2rem;
+        margin: 1.5rem;
+    }
+    .event-card {
+        padding: 1.5rem;
+        border-left-width: 4px;
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+    }
+    .event-date {
+        min-width: 3.5rem;
+        padding: 0.7rem;
+        .date-day {
+            font-size: 1.2rem;
+        }
+        .date-month {
+            font-size: 0.75rem;
+        }
+    }
+    .event-status {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+    }
+    .event-content {
+        .event-title {
+            font-size: 1.1rem;
+        }
+        .event-description {
+            font-size: 0.9rem;
+        }
+    }
+    .event-meta {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+    .meta-item {
+        ion-icon {
+            font-size: 0.9rem;
+        }
+        span {
+            font-size: 0.8rem;
+        }
+    }
+    .empty-state {
+        padding: 3rem 2rem;
+        margin: 1.5rem;
+        .empty-icon {
+            font-size: 2.8rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+        }
+        p {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+
+/* Large Desktop Responsive */
+
+@media (min-width: 1025px) {
+    .events-content {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .events-section {
+        margin-bottom: 3.5rem;
+    }
+    .section-title {
+        font-size: 1.3rem;
+        margin: 2rem;
+        margin-bottom: 2rem;
+    }
+    .events-list {
+        gap: 1.5rem;
+        margin: 2rem;
+    }
+    .event-card {
+        padding: 1.8rem;
+        border-left-width: 5px;
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+        }
+    }
+    .event-date {
+        min-width: 4rem;
+        padding: 0.8rem;
+        .date-day {
+            font-size: 1.3rem;
+        }
+        .date-month {
+            font-size: 0.8rem;
+        }
+    }
+    .event-status {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.8rem;
+    }
+    .event-content {
+        .event-title {
+            font-size: 1.2rem;
+        }
+        .event-description {
+            font-size: 0.95rem;
+        }
+    }
+    .event-meta {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .meta-item {
+        ion-icon {
+            font-size: 0.95rem;
+        }
+        span {
+            font-size: 0.85rem;
+        }
+    }
+    .empty-state {
+        padding: 4rem 2.5rem;
+        margin: 2rem;
+        .empty-icon {
+            font-size: 3rem;
+        }
+        h3 {
+            font-size: 1.3rem;
+        }
+        p {
+            font-size: 0.95rem;
+        }
+    }
+}
+
+
+/* Mobile Optimizations */
+
+@media (max-width: 380px) {
+    .events-content {
+        padding: 0.8rem;
+    }
+    .section-title {
+        margin: 0.8rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+    .events-list {
+        margin: 0.8rem;
+        gap: 0.6rem;
+    }
+    .event-card {
+        padding: 0.8rem;
+        border-left-width: 2px;
+    }
+    .event-date {
+        min-width: 2.5rem;
+        padding: 0.4rem;
+        .date-day {
+            font-size: 0.9rem;
+        }
+        .date-month {
+            font-size: 0.6rem;
+        }
+    }
+    .event-status {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.4rem;
+    }
+    .event-content {
+        .event-title {
+            font-size: 0.85rem;
+        }
+        .event-description {
+            font-size: 0.75rem;
+        }
+    }
+    .meta-item {
+        gap: 0.4rem;
+        ion-icon {
+            font-size: 0.75rem;
+        }
+        span {
+            font-size: 0.65rem;
+        }
+    }
+    .empty-state {
+        padding: 1.5rem 0.8rem;
+        margin: 0.8rem;
+        .empty-icon {
+            font-size: 2rem;
+        }
+        h3 {
+            font-size: 0.9rem;
+        }
+        p {
+            font-size: 0.75rem;
+        }
+    }
+}
+
+
+/* Landscape Orientation Support */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .events-list {
+        gap: 0.6rem;
+    }
+    .event-card {
+        padding: 0.8rem;
+    }
+    .event-header {
+        margin-bottom: 0.6rem;
+    }
+    .event-content .event-description {
+        margin-bottom: 0.6rem;
+    }
+}
