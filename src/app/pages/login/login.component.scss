@@ -231,7 +231,7 @@ ion-toolbar {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.8rem 1.5rem;
     background: transparent;
     color: #F54927;
     border: 2px solid #F54927;
@@ -398,11 +398,11 @@ ion-toolbar {
     }
     .input-group {
         margin-bottom: 1rem;
-        padding: 0 0.75rem;
+        padding: 0 0.8rem;
         border-radius: 8px;
     }
     .form-input {
-        padding: 0.75rem 0;
+        padding: 0.8rem 0;
         font-size: 0.85rem;
     }
     .input-icon ion-icon {
@@ -410,7 +410,7 @@ ion-toolbar {
         padding-right: 0.4rem;
     }
     .login-button {
-        padding: 0.75rem;
+        padding: 0.8rem;
         font-size: 0.9rem;
         border-radius: 8px;
     }
@@ -420,12 +420,12 @@ ion-toolbar {
     }
     .signup-link {
         padding: 0.625rem 1.25rem;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
     .login-footer p {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
     .error-message {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 }

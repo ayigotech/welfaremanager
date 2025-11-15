@@ -112,8 +112,9 @@ ion-item-divider {
     --background: #f8f9fa;
 }
 
-ion-toolbar {
-    --background: linear-gradient(135deg, #F54927 0%, #F5B027 100%);
+ion-toolbar,
+ion-header {
+    --background: linear-gradient(135deg, #622e23 0%, #b88115 100%);
 }
 
 ion-header {

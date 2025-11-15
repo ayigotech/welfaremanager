@@ -60,7 +60,7 @@
     border-radius: 1rem;
     background: white;
     color: #7f8c8d;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 300;
     white-space: nowrap;
     cursor: pointer;
@@ -109,7 +109,7 @@
         line-height: 1.3;
     }
     .record-count {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-weight: 300;
         color: #7f8c8d;
         background: #e8f4fd;
@@ -191,13 +191,13 @@
     align-items: center;
     margin-bottom: 0.4rem;
     .label {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-weight: 300;
         color: #7f8c8d;
         line-height: 1.2;
     }
     .value {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
         font-weight: 300;
         color: #2c3e50;
         text-align: right;
@@ -212,7 +212,7 @@
     padding: 0.5rem 0.8rem;
     background: #f8f9fa;
     border-radius: 0.5rem;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 300;
     color: #7f8c8d;
     line-height: 1.2;
@@ -273,14 +273,14 @@
     }
     .filter-btn {
         padding: 0.6rem 1.2rem;
-        font-size: 0.75rem;
+        font-size: 0.85rem;
     }
     .payments-section {
         .section-title {
             font-size: 1.1rem;
         }
         .record-count {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
         }
     }
     .payments-list {
@@ -293,14 +293,14 @@
         }
     }
     .payment-type {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
     .payment-amount {
         font-size: 1.1rem;
     }
     .detail-row {
         .label {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
         }
         .value {
             font-size: 0.8rem;
@@ -368,7 +368,7 @@
         }
     }
     .payment-type {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
     }
     .payment-amount {
         font-size: 1.2rem;
@@ -483,7 +483,7 @@
     }
     .search-input {
         padding: 0.8rem 0.8rem 0.8rem 2.8rem;
-        font-size: 0.75rem;
+        font-size: 0.85rem;
     }
     .search-box ion-icon {
         font-size: 0.9rem;
@@ -521,7 +521,7 @@
             font-size: 0.65rem;
         }
         .value {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
     }
     .empty-state {
@@ -533,7 +533,7 @@
             font-size: 0.9rem;
         }
         p {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
         }
     }
 }
