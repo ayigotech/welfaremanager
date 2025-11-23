@@ -3,7 +3,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Platform } from '@ionic/angular';
-import { SplashComponent } from './pages/splash/splash.component';
 
 import { 
   school, checkmarkCircle, cash, checkmarkDone, wallet, alertCircle,

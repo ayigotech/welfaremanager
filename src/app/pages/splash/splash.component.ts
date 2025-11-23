@@ -1,19 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-splash',
-//   templateUrl: './splash.component.html',
-//   styleUrls: ['./splash.component.scss'],
-// })
-// export class SplashComponent  implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {}
-
-// }
-
-
 
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
